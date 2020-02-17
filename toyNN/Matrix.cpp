@@ -96,10 +96,9 @@ void Matrix::setData(int y, int x, double newData){
 //Prints out the matrix
 void Matrix::print(){
     std::cout<<"-------------------v"<<std::endl;
-    this->checkMatrix();
-    for(int y=0;y<numRows;y++){
+    for(int y=0;y<this->numRows;y++){
         std::cout<<"[";
-        for(int x=0;x<numCols-1;x++){
+        for(int x=0;x<this->numCols-1;x++){
             std::cout<<this->data[y][x]<<",";
         }
         std::cout<<this->data[y][numCols-1]<<"]"<<std::endl;
@@ -213,7 +212,7 @@ Matrix Matrix::subtract(Matrix &a,Matrix &b){
 void Matrix::hadamardProduct(Matrix b){
     std::cout<<"STATUS: Preforming hadamard product"<<std::endl;
     this->checkMatrix();
-    if(this->numRows==b.getNumRows()||this->numCols==b.getNumCols()){
+    if(this->numRows==b.getNumRows() && this->numCols==b.getNumCols()){
         for(int y=0;y<numRows;y++){
             for(int x=0;x<numCols;x++){
                 double val = this->data[y][x];
@@ -328,16 +327,50 @@ Matrix Matrix::operator -(Matrix const &obj){
     return result;
 }
 
-Matrix Matrix::operator *(Matrix const &obj){
-    Matrix result;
-    
-    return result;
+Matrix Matrix::operator *(Matrix &obj){ //Cross product
+    std::cout<<"STATUS: Preforming cross product"<<std::endl;
+    if(this->getNumCols() == obj.getNumRows()){
+        Matrix result(this->getNumRows(),obj.getNumCols());
+        for(int y=0;y<result.getNumRows();y++){
+            for(int x=0;x<result.getNumCols();x++){
+                double sum = 0;
+                for(int z=0;z<this->getNumCols();z++){
+                    sum += this->getData(y,z)*obj.getData(z,x);
+                }
+                result.setData(y,x,sum);
+            }
+        }
+        return result;
+    }else{
+        std::cout<<"ERROR: Columns of A must match rows of B."<<std::endl;
+        exit(1);
+    }
 }
-Matrix Matrix::operator ->*(Matrix const &obj){
-    Matrix result;
-    return result;
+Matrix Matrix::operator ->*(Matrix &obj){ //Hadamard product
+    std::cout<<"STATUS: Preforming hadamard product"<<std::endl;
+    if(this->numRows == obj.getNumRows() && this->numCols == obj.getNumCols()){
+        Matrix result(this->getNumRows(),obj.getNumCols());
+        for(int y=0;y<numRows;y++){
+            for(int x=0;x<numCols;x++){
+                double val = this->data[y][x];
+                result.data[y][x] = val*obj.data[y][x];
+            }
+        }
+        return result;
+    }else{
+        std::cout<<"ERROR: Size of matrices Must match."<<std::endl;
+        exit(1);
+    }
 }
-Matrix Matrix::operator *(double &obj){
-    Matrix result;
+
+Matrix Matrix::operator *(double &obj){ //Scalar product
+    Matrix result(this->numRows,this->numCols);
+    std::cout<<"STATUS: Preforming scalar product"<<std::endl;
+    for(int y=0;y<numRows;y++){
+        for(int x=0;x<numCols;x++){
+            double val = this->data[y][x];
+            result.data[y][x] = val*obj;
+        }
+    }
     return result;
 }

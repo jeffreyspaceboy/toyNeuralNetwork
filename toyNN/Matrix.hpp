@@ -61,8 +61,8 @@ class Matrix{
     
         Matrix operator +(Matrix const &obj);
         Matrix operator -(Matrix const &obj);
-        Matrix operator *(Matrix const &obj);
-        Matrix operator ->*(Matrix const &obj);
+        Matrix operator *(Matrix &obj);
+        Matrix operator ->*(Matrix &obj);
         Matrix operator *(double &obj);
         
 };

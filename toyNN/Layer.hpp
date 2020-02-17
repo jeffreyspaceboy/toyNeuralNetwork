@@ -15,21 +15,35 @@
 class Layer{
     private:
         //sig(W*in + b)=out
+        
+    public:
         Matrix inputs;
         Matrix weights;
+        Matrix weightsT;
         Matrix biases;
         Matrix outputs;
-    public:
+    
+        Matrix outputError;
+        Matrix gradient;
+        Matrix weightsDelta;
+        Matrix inputError;
+    
+        
+    
         Layer();
         Layer(int numStartNodes, int numEndNodes);
         Layer(const Layer &obj);
         ~Layer();
         void randomize(int lowerBound, int upperBound);
         void setInputs(Matrix data, bool doTranspose);
+    
         Matrix getOutputs();
         Matrix getInputs();
         Matrix getWeights();
         Matrix getBiases();
+    
+        void setWeightsDelta(Matrix &obj);
+        void setWeightsTransposed();
 };
 
 #endif /* Layer_hpp */

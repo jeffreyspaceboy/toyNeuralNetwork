@@ -21,6 +21,17 @@ Layer::Layer(int numStartNodes,int numEndNodes){
     this->weights = weights;
     this->biases = biases;
     this->outputs = outputs;
+    
+    this->setWeightsTransposed();
+    
+    Matrix outputError(numEndNodes,1);
+    this->outputError = outputError;
+    Matrix gradient(numEndNodes,1);
+    this->gradient = gradient;
+    Matrix weightsDelta(numEndNodes,numStartNodes);
+    this->weightsDelta = weightsDelta;
+    Matrix inputError(numStartNodes,1);
+    this->inputError = inputError;
 }
 
 Layer::Layer(const Layer &obj){
@@ -48,16 +59,7 @@ void Layer::setInputs(Matrix data, bool doTranspose){
 
 Matrix Layer::getOutputs(){
     randomize(-15, 15);
-
-    //this->inputs.print();
-    //this->weights.print();
-    //this->outputs.print();
-    //this->biases.print();
-    
     this->outputs = this->outputs.crossProduct(this->weights,this->inputs);
-    //this->outputs.print();
-    //this->biases.print();
-    
     this->outputs.add(this->biases);
     this->outputs.sigmoid();
     return this->outputs;
@@ -77,3 +79,12 @@ Matrix Layer::getBiases(){
 
 //Matrix outError;
 //outError = outError.subtract();
+
+void Layer::setWeightsDelta(Matrix &obj){
+    this->weightsDelta = obj;
+}
+
+void Layer::setWeightsTransposed(){
+    this->weightsT = this->weights;
+    this->weightsT.transpose();
+}

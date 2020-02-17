@@ -17,8 +17,7 @@ class NeuralNetwork{
     private:
         std::vector<int> numNodes; //Address = layer, value = number of nodes in layer
         std::vector<Layer> layers;
-        std::vector<Layer> dLayers;
-        float learningRate = 0.2;
+        double learningRate = 0.2;
         int trainingRuns = 1;
     public:
         NeuralNetwork();

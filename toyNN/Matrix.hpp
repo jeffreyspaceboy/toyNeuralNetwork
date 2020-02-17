@@ -58,7 +58,12 @@ class Matrix{
     
         void transpose();
         void checkMatrix();
-        
+    
+        Matrix operator +(Matrix const &obj);
+        Matrix operator -(Matrix const &obj);
+        Matrix operator *(Matrix const &obj);
+        Matrix operator ->*(Matrix const &obj);
+        Matrix operator *(double &obj);
         
 };
 

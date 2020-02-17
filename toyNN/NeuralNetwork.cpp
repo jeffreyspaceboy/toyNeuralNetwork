@@ -70,21 +70,20 @@ void NeuralNetwork::train(std::vector<std::vector<double>> inputData, std::vecto
             
             //PROBABLY NEED TO PUT IN A FOR LOOP TO RUN THROUGH LAYERS
             //matrix Error = target - output //Start at output layer
-            Matrix Error; //Make error Matrix
-            Error = Error.subtract(trainingTargets, trainingOutputs); //Put the calculated error into the error matrix
-            
-            //Matrix Cost;
+            Matrix error; //Make error Matrix
+            error = trainingTargets - trainingOutputs;
+            //error = error.subtract(trainingTargets, trainingOutputs); //Put the calculated error into the error matrix
             
             
             //matrix gradient = Map(dSigmoid(output))
-//            Matrix Gradient;
-//            Gradient = trainingOutputs;
-//            Gradient.dSigmoid();
+            Matrix Gradient;
+            Gradient = trainingOutputs;
+            Gradient.dSigmoid();
             
             
-//            Gradient.hadamardProduct(Error); //gradient = gradient * outError //Hadamard
-//            Gradient.scalarProduct(this->learningRate); //gradient = gradient * learningRate //Scalar
-//
+            Gradient.hadamardProduct(error); //gradient = gradient * outError //Hadamard
+            Gradient.scalarProduct(this->learningRate); //gradient = gradient * learningRate //Scalar
+
             
             //Traspose hidden matrix
 //            Matrix hiddenT(this->layers[1].getOutputs()); //THE NODES themselves

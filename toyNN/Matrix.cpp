@@ -291,3 +291,53 @@ void Matrix::checkMatrix(){
         exit(1);
     }
 }
+
+Matrix Matrix::operator +(Matrix const &obj){
+    Matrix result;
+    if((this->numRows != obj.numRows)||(this->numCols != obj.numCols)){
+        std::cout<<"ERROR: Columns and Rows must match."<<std::endl;
+        exit(1);
+    }else{
+        for(int y=0;y<this->numRows;y++){
+            std::vector<double> temp;
+            for(int x=0;x<this->numCols;x++){
+                double val = this->data[y][x];
+                temp.push_back(val + obj.data[y][x]);
+            }
+            result.data.push_back(temp);
+        }
+    }
+    return result;
+}
+
+Matrix Matrix::operator -(Matrix const &obj){
+    Matrix result;
+    if((this->numRows != obj.numRows)||(this->numCols != obj.numCols)){
+        std::cout<<"ERROR: Columns and Rows must match."<<std::endl;
+        exit(1);
+    }else{
+        for(int y=0;y<this->numRows;y++){
+            std::vector<double> temp;
+            for(int x=0;x<this->numCols;x++){
+                double val = this->data[y][x];
+                temp.push_back(val - obj.data[y][x]);
+            }
+            result.data.push_back(temp);
+        }
+    }
+    return result;
+}
+
+Matrix Matrix::operator *(Matrix const &obj){
+    Matrix result;
+    
+    return result;
+}
+Matrix Matrix::operator ->*(Matrix const &obj){
+    Matrix result;
+    return result;
+}
+Matrix Matrix::operator *(double &obj){
+    Matrix result;
+    return result;
+}

@@ -87,6 +87,7 @@ void Matrix::print(){
     //std::cout<<"-------------------^"<<std::endl;
 }
 
+
 double singleSigmoid(double val, int y, int x){
     return (1/(1+(exp(-val))));
 }

@@ -7,6 +7,7 @@
 //
 
 #include "NeuralNetwork.hpp"
+#include <fstream>
 
 NeuralNetwork::NeuralNetwork(){}
 
@@ -38,17 +39,8 @@ Matrix NeuralNetwork::feedForward(std::vector<std::vector<double>> inputData){
 }
 
 void NeuralNetwork::train(std::vector<std::vector<double>> inputData, std::vector<std::vector<double>> targetData){
-    if(inputData[0].size() > this->numNodes.front()){
-        std::cout<<"ERROR: Too many input nodes"<<std::endl;
-        exit(1);
-    } else if (inputData[0].size() < this->numNodes.front()){
-        std::cout<<"ERROR: Too few input nodes"<<std::endl;
-        exit(1);
-    } else if (targetData[0].size() > this->numNodes.back()){
-        std::cout<<"ERROR: Too many output target nodes"<<std::endl;
-        exit(1);
-    } else if (targetData[0].size() < this->numNodes.back()){
-        std::cout<<"ERROR: Too few output target nodes"<<std::endl;
+    if((inputData[0].size() != this->numNodes.front()) || (targetData[0].size() != this->numNodes.back())){
+        std::cout<<"ERROR: Training data dimentions do not match network dimentions."<<std::endl;
         exit(1);
     } else {
         int x;
@@ -99,4 +91,36 @@ std::vector<std::vector<double>> NeuralNetwork::predict(std::vector<std::vector<
         finalOutput.print();
     }
     return inputData;
+}
+
+void NeuralNetwork::saveWeightsFile(std::string fileName){
+    std::ofstream saveFile;
+    saveFile.open(fileName);
+    for(int i=0;i<(this->layers.size());i++){
+        int numRows = (int)this->layers[i].weights.getNumRows();
+        int numCols = (int)this->layers[i].weights.getNumCols();
+        saveFile << "layerW:" << i <<", rows:"<< numRows <<", cols:"<< numCols <<"~"<<std::endl;
+        for(int y=0;y<numRows;y++){
+            saveFile<<"[";
+            for(int x=0;x<(numCols-1);x++){
+                saveFile << this->layers[i].weights.getData(y, x)<<",";
+            }
+            saveFile << this->layers[i].weights.getData(y, numCols-1)<<"]~"<<std::endl;
+        }
+        numRows = (int)this->layers[i].biases.getNumRows();
+        numCols = (int)this->layers[i].biases.getNumCols();
+        saveFile << "layerB:" << i <<", rows:"<< numRows <<", cols:"<< numCols <<"~"<<std::endl;
+        for(int y=0;y<numRows;y++){
+            saveFile<<"[";
+            for(int x=0;x<(numCols-1);x++){
+                saveFile << this->layers[i].biases.getData(y, x)<<",";
+            }
+            saveFile << this->layers[i].biases.getData(y, numCols-1)<<"]~"<<std::endl;
+        }
+    }
+    saveFile.close();
+}
+
+void NeuralNetwork::getWeightsFile(std::string fileName){
+    
 }

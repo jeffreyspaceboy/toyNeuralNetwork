@@ -27,6 +27,9 @@ class NeuralNetwork{
         Matrix feedForward(std::vector<std::vector<double>> inputData);
         void train(std::vector<std::vector<double>> inputData, std::vector<std::vector<double>> targetData);
         std::vector<std::vector<double>> predict(std::vector<std::vector<double>> inputData);
+       
+        void saveWeightsFile(std::string fileName = "myNeuralNetwork.txt");
+        void getWeightsFile(std::string fileName = "myNeuralNetwork.txt");
 };
 
 #endif /* NeuralNetwork_hpp */

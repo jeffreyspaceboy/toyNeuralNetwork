@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include "NeuralNetwork.hpp"
-/*
+
 std::vector<std::vector<double>> inputs =
 {{255,0,0},{201,89,89},{230,71,39},{240,17,17},{219,28,41},
  {255,153,0},{235,175,87},{217,114,4},{222,131,47},{204,119,8},
@@ -33,9 +33,9 @@ std::vector<std::vector<double>> targets =
 //Red,Orange,Yellow,Green,Cyan,Blue,Purple,Pink
 
 std::vector<std::vector<double>> checkInputs =
-{{227,45,0}};
+{{0,0,255}};
 
-*/
+/*
 
 std::vector<std::vector<double>> inputs =
 {
@@ -51,12 +51,16 @@ std::vector<std::vector<double>> checkInputs =
 {
     {0,0},{2,1},{10,10},{5,7.5}
 };
-std::vector<int> numNodes = {2,2,1};
+ 
+ */
+
+std::vector<int> numNodes = {3,6,6,8};
 
 int main(){
     NeuralNetwork myToyNN(numNodes);
-    myToyNN.train(inputs, targets);
-    myToyNN.predict(checkInputs);
+    //myToyNN.train(inputs, targets);
+    //myToyNN.predict(checkInputs);
+    myToyNN.saveWeightsFile();
     return 0;
 }
 

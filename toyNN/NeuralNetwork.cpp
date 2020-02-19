@@ -7,6 +7,7 @@
 //
 
 #include "NeuralNetwork.hpp"
+#include <sstream>
 #include <fstream>
 
 NeuralNetwork::NeuralNetwork(){}
@@ -18,6 +19,43 @@ NeuralNetwork::NeuralNetwork(std::vector<int> numNodes){
         this->layers.push_back(newLayer);
     }
 }
+
+NeuralNetwork::NeuralNetwork(std::string fileName){
+    NeuralNetwork result;
+    std::ifstream savedFile;
+    savedFile.open(fileName);
+    if(savedFile.is_open()){
+        int matrixInfo[4];
+        std::string scannedValue;
+        std::vector<int> numNodes;
+        while(!savedFile.eof()){
+            std::getline(savedFile, scannedValue);
+            if(scannedValue == "~"){
+                for(int j=0;j<4;j++){
+                    std::getline(savedFile, scannedValue, ' ');
+                    matrixInfo[j] = std::stoi(scannedValue);
+                }
+                if(matrixInfo[1]==0){
+                    if(matrixInfo[0] == 0){
+                        numNodes.push_back(matrixInfo[3]);
+                    }
+                    numNodes.push_back(matrixInfo[2]);
+                }
+            }
+        }
+        this->numNodes = numNodes;
+        savedFile.close();
+    } else {
+        std::cout<<"ERROR: Could not open file."<<std::endl;
+        exit(1);
+    }
+    for(int i=0; i < (this->numNodes.size()-1) ; i++){
+        Layer newLayer(this->numNodes[i], this->numNodes[i+1]);
+        this->layers.push_back(newLayer);
+    }
+    this->getWeightsFile(fileName);
+}
+
 
 NeuralNetwork::NeuralNetwork(const NeuralNetwork &obj){
     this->numNodes = obj.numNodes;
@@ -99,28 +137,65 @@ void NeuralNetwork::saveWeightsFile(std::string fileName){
     for(int i=0;i<(this->layers.size());i++){
         int numRows = (int)this->layers[i].weights.getNumRows();
         int numCols = (int)this->layers[i].weights.getNumCols();
-        saveFile << "layerW:" << i <<", rows:"<< numRows <<", cols:"<< numCols <<"~"<<std::endl;
+        saveFile << "~\n";
+        saveFile << i << " " << 0 <<" "<< numRows <<" "<< numCols <<" \n";
         for(int y=0;y<numRows;y++){
-            saveFile<<"[";
+            //saveFile<<"[";
             for(int x=0;x<(numCols-1);x++){
-                saveFile << this->layers[i].weights.getData(y, x)<<",";
+                saveFile << this->layers[i].weights.getData(y, x)<<" ";
             }
-            saveFile << this->layers[i].weights.getData(y, numCols-1)<<"]~"<<std::endl;
+            saveFile << this->layers[i].weights.getData(y, numCols-1)<<" \n";///<<std::endl;
         }
+        saveFile << "~\n";
         numRows = (int)this->layers[i].biases.getNumRows();
         numCols = (int)this->layers[i].biases.getNumCols();
-        saveFile << "layerB:" << i <<", rows:"<< numRows <<", cols:"<< numCols <<"~"<<std::endl;
+        saveFile << i << " " << 1 <<" "<< numRows <<" "<< numCols <<" \n";
         for(int y=0;y<numRows;y++){
-            saveFile<<"[";
+            //saveFile<<"[";
             for(int x=0;x<(numCols-1);x++){
-                saveFile << this->layers[i].biases.getData(y, x)<<",";
+                saveFile << this->layers[i].biases.getData(y, x)<<" ";
             }
-            saveFile << this->layers[i].biases.getData(y, numCols-1)<<"]~"<<std::endl;
+            saveFile << this->layers[i].biases.getData(y, numCols-1)<<" \n";///<<std::endl;
         }
+        saveFile << "\n";
     }
     saveFile.close();
 }
 
 void NeuralNetwork::getWeightsFile(std::string fileName){
+    //NeuralNetwork result;
+    std::ifstream savedFile;
+    savedFile.open(fileName);
+    if(savedFile.is_open()){
+        int matrixInfo[4];
+        std::string scannedValue;
+        while(!savedFile.eof()){
+            std::getline(savedFile, scannedValue);
+            if(scannedValue == "~"){
+                for(int j=0;j<4;j++){
+                    std::getline(savedFile, scannedValue, ' ');
+                    matrixInfo[j] = std::stoi(scannedValue);
+                }
+                for(int y=0;y<matrixInfo[2];y++){
+                    for(int x=0;x<matrixInfo[3];x++){
+                        std::getline(savedFile, scannedValue, ' ' );
+                        if(matrixInfo[1]==0) {
+                            this->layers[matrixInfo[0]].weights.setData(y, x, std::stod(scannedValue));
+                        } else if(matrixInfo[1]==1) {
+                            this->layers[matrixInfo[0]].biases.setData(y, x, std::stod(scannedValue));
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        std::cout<<"ERROR: Could not open file."<<std::endl;
+        exit(1);
+    }
     
 }
+
+//Layer newLayer(mat, this->numNodes[i+1]);
+//this->layers.push_back(newLayer);
+//
+//result.layers.push_back();

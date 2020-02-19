@@ -22,6 +22,7 @@ class NeuralNetwork{
     public:
         NeuralNetwork();
         NeuralNetwork(std::vector<int> numNodes);
+        NeuralNetwork(std::string fileName);
         NeuralNetwork(const NeuralNetwork &obj);
         ~NeuralNetwork();
         Matrix feedForward(std::vector<std::vector<double>> inputData);

@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include "NeuralNetwork.hpp"
-
+/*
 std::vector<std::vector<double>> inputs =
 {{255,0,0},{201,89,89},{230,71,39},{240,17,17},{219,28,41},
  {255,153,0},{235,175,87},{217,114,4},{222,131,47},{204,119,8},
@@ -34,8 +34,8 @@ std::vector<std::vector<double>> targets =
 
 std::vector<std::vector<double>> checkInputs =
 {{0,0,255}};
+ */
 
-/*
 
 std::vector<std::vector<double>> inputs =
 {
@@ -49,18 +49,19 @@ std::vector<std::vector<double>> targets =
 
 std::vector<std::vector<double>> checkInputs =
 {
-    {0,0},{2,1},{10,10},{5,7.5}
+    {0,0},{2,1},{10,10},{5,7.5},{1,4},{7,6}
 };
  
- */
 
-std::vector<int> numNodes = {3,6,6,8};
+std::vector<int> numNodes = {2,4,1};
 
 int main(){
-    NeuralNetwork myToyNN(numNodes);
-    //myToyNN.train(inputs, targets);
-    //myToyNN.predict(checkInputs);
+    //NeuralNetwork myToyNN(numNodes);
+    NeuralNetwork myToyNN("myNeuralNetwork.txt");
+    myToyNN.train(inputs, targets);
     myToyNN.saveWeightsFile();
+    myToyNN.predict(checkInputs);
+    std::cout<<"Done"<<std::endl;
     return 0;
 }
 

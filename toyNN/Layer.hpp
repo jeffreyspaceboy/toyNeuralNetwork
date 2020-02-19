@@ -18,6 +18,7 @@ class Layer{
         
     public:
         Matrix inputs;
+        Matrix inputsT;
         Matrix weights;
         Matrix weightsT;
         Matrix biases;
@@ -44,6 +45,7 @@ class Layer{
     
         void setWeightsDelta(Matrix &obj);
         void setWeightsTransposed();
+        void setInputsTransposed();
 };
 
 #endif /* Layer_hpp */

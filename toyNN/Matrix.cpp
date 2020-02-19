@@ -13,12 +13,10 @@ Matrix::Matrix(){
 }
 
 Matrix::Matrix(unsigned long int rows, unsigned long int cols){
-    this->numRows = rows;
-    this->numCols = cols;
-    std::cout<<"STATUS: Generating a Clean ["<<this->numRows<<","<<this->numCols<<"] Matrix"<<std::endl;
-    for(int y=0;y<(this->numRows);y++){
+    std::cout<<"STATUS: Generating a Clean ["<<rows<<","<<cols<<"] Matrix"<<std::endl;
+    for(int y=0;y<(rows);y++){
         std::vector<double> temp;
-        for(int x=0;x<(this->numCols);x++){
+        for(int x=0;x<(cols);x++){
             temp.push_back(0);
         }
         this->data.push_back(temp);
@@ -28,16 +26,12 @@ Matrix::Matrix(unsigned long int rows, unsigned long int cols){
 
 Matrix::Matrix(std::vector<std::vector<double>> newData){
     this->data = newData;
-    this->numRows = this->getNumRows();
-    this->numCols = this->getNumCols();
-    std::cout<<"STATUS: Generating a ["<<this->numRows<<","<<this->numCols<<"] Matrix"<<std::endl;
+    std::cout<<"STATUS: Generating a ["<<this->getNumRows()<<","<<this->getNumCols()<<"] Matrix"<<std::endl;
 }
 
 
 Matrix::Matrix(const Matrix &obj){
     //std::cout<<"STATUS: Copying Matrix"<<std::endl;
-    this->numRows = obj.numRows;
-    this->numCols = obj.numCols;
     this->data = obj.data;
 }
 
@@ -47,8 +41,8 @@ Matrix::~Matrix(void){
 
 //Fills Data vector with vector data
 void Matrix::fillFrom(std::vector<std::vector<double>> &vect){
-    for(int y=0;y<(this->numRows);y++){
-        for(int x=0;x<(this->numCols);x++){
+    for(int y=0;y<(this->getNumRows());y++){
+        for(int x=0;x<(this->getNumCols());x++){
             this->data[y][x] = vect[y][x];
         }
     }
@@ -63,8 +57,8 @@ void Matrix::fillFrom(double array[maxDataSize][maxDataSize]){
 }
 
 void Matrix::randomize(int lowerBound, int upperBound){
-    for(int y=0;y<(this->numRows);y++){
-        for(int x=0;x<(this->numCols);x++){
+    for(int y=0;y<(this->getNumRows());y++){
+        for(int x=0;x<(this->getNumCols());x++){
             this->data[y][x] = (rand() % (upperBound-lowerBound+1) + lowerBound);
         }
     }
@@ -76,7 +70,12 @@ unsigned long int Matrix::getNumRows(){
 }
 
 unsigned long int Matrix::getNumCols(){
-    return this->data[0].size();
+    if(this->data.size()>0){
+        return this->data[0].size();
+    }else{
+        std::cout<<"ERROR: Nothing in Matrix"<<std::endl;
+        exit(1);
+    }
 }
 
 double Matrix::getData(int y, int x){
@@ -96,12 +95,12 @@ void Matrix::setData(int y, int x, double newData){
 //Prints out the matrix
 void Matrix::print(){
     std::cout<<"-------------------v"<<std::endl;
-    for(int y=0;y<this->numRows;y++){
+    for(int y=0;y<this->getNumRows();y++){
         std::cout<<"[";
-        for(int x=0;x<this->numCols-1;x++){
+        for(int x=0;x<(this->getNumCols()-1);x++){
             std::cout<<this->data[y][x]<<",";
         }
-        std::cout<<this->data[y][numCols-1]<<"]"<<std::endl;
+        std::cout<<this->data[y][getNumCols()-1]<<"]"<<std::endl;
     }
     std::cout<<"-------------------^"<<std::endl;
 }
@@ -116,8 +115,8 @@ double singleDSigmoid(double val, int y, int x){
 
 void Matrix::map(double (*func)(double val,int y,int x)){
     this->checkMatrix();
-    for(int y=0;y<numRows;y++){
-        for(int x=0;x<numCols;x++){
+    for(int y=0;y<getNumRows();y++){
+        for(int x=0;x<getNumCols();x++){
             double val = this->data[y][x];
             this->data[y][x] = (*func)(val,y,x);
         }
@@ -127,8 +126,8 @@ void Matrix::map(double (*func)(double val,int y,int x)){
 Matrix Matrix::map(Matrix &a, double (*func)(double val,int y,int x)){
     Matrix result;
     result = a;
-    for(int y=0;y<numRows;y++){
-        for(int x=0;x<numCols;x++){
+    for(int y=0;y<getNumRows();y++){
+        for(int x=0;x<getNumCols();x++){
             double val = result.data[y][x];
             result.data[y][x] = (*func)(val,y,x);
         }
@@ -147,12 +146,12 @@ void Matrix::add(Matrix b){
     this->checkMatrix();
     //this->print();
     //b.print();
-    if((this->numRows != b.numRows)||(this->numCols != b.numCols)){
+    if((this->getNumRows() != b.getNumRows())||(this->getNumCols() != b.getNumCols())){
         std::cout<<"ERROR: Columns and Rows must match."<<std::endl;
         exit(1);
     }else{
-        for(int y=0;y<numRows;y++){
-            for(int x=0;x<numCols;x++){
+        for(int y=0;y<getNumRows();y++){
+            for(int x=0;x<getNumCols();x++){
                 double val = this->data[y][x];
                 this->data[y][x] = val + b.data[y][x];
             }
@@ -160,10 +159,27 @@ void Matrix::add(Matrix b){
     }
 }
 
+void Matrix::vectorSum(Matrix &b){
+    this->checkMatrix();
+    //this->print();
+    //b.print();
+    if((this->getNumRows() != b.getNumRows())||(b.getNumCols() != 1)){
+        std::cout<<"ERROR: Rows must match."<<std::endl;
+        exit(1);
+    }else{
+        for(int y=0;y<getNumRows();y++){
+            for(int x=0;x<getNumCols();x++){
+                double val = this->data[y][x];
+                this->data[y][x] = val + b.data[y][1];
+            }
+        }
+    }
+}
+
 void Matrix::add(double b){
     this->checkMatrix();
-    for(int y=0;y<numRows;y++){
-        for(int x=0;x<numCols;x++){
+    for(int y=0;y<getNumRows();y++){
+        for(int x=0;x<getNumCols();x++){
             double val = this->data[y][x];
             this->data[y][x] = val+b;
         }
@@ -172,12 +188,12 @@ void Matrix::add(double b){
 
 void Matrix::subtract(Matrix b){
     this->checkMatrix();
-    if((this->numRows != b.numRows)||(this->numCols != b.numCols)){
+    if((this->getNumRows() != b.getNumRows())||(this->getNumCols() != b.getNumCols())){
         std::cout<<"ERROR: Columns and Rows must match."<<std::endl;
         return;
     }else{
-        for(int y=0;y<numRows;y++){
-            for(int x=0;x<numCols;x++){
+        for(int y=0;y<getNumRows();y++){
+            for(int x=0;x<getNumCols();x++){
                 double val = this->data[y][x];
                 this->data[y][x] = val - b.data[y][x];
             }
@@ -186,21 +202,21 @@ void Matrix::subtract(Matrix b){
 }
 void Matrix::subtract(double b){
     this->checkMatrix();
-    for(int y=0;y<numRows;y++){
-        for(int x=0;x<numCols;x++){
+    for(int y=0;y<getNumRows();y++){
+        for(int x=0;x<getNumCols();x++){
             double val = this->data[y][x];
             this->data[y][x] = val-b;
         }
     }
 }
 Matrix Matrix::subtract(Matrix &a,Matrix &b){
-    if((a.numRows != b.numRows)||(a.numCols != b.numCols)){
+    if((a.getNumRows() != b.getNumRows())||(a.getNumCols() != b.getNumCols())){
         std::cout<<"ERROR: Columns and Rows must match."<<std::endl;
         exit(1);
     }else{
         Matrix result(a.getNumRows(),a.getNumCols());
-        for(int y=0;y<a.numRows;y++){
-            for(int x=0;x<a.numCols;x++){
+        for(int y=0;y<a.getNumRows();y++){
+            for(int x=0;x<a.getNumCols();x++){
                 result.setData(y, x, (a.data[y][x] - b.data[y][x]));
             }
         }
@@ -212,9 +228,9 @@ Matrix Matrix::subtract(Matrix &a,Matrix &b){
 void Matrix::hadamardProduct(Matrix b){
     std::cout<<"STATUS: Preforming hadamard product"<<std::endl;
     this->checkMatrix();
-    if(this->numRows==b.getNumRows() && this->numCols==b.getNumCols()){
-        for(int y=0;y<numRows;y++){
-            for(int x=0;x<numCols;x++){
+    if(this->getNumRows()==b.getNumRows() && this->getNumCols()==b.getNumCols()){
+        for(int y=0;y<getNumRows();y++){
+            for(int x=0;x<getNumCols();x++){
                 double val = this->data[y][x];
                 this->data[y][x] = val*b.data[y][x];
             }
@@ -228,8 +244,8 @@ void Matrix::hadamardProduct(Matrix b){
 void Matrix::scalarProduct(double b){
     std::cout<<"STATUS: Preforming scalar product"<<std::endl;
     this->checkMatrix();
-    for(int y=0;y<numRows;y++){
-        for(int x=0;x<numCols;x++){
+    for(int y=0;y<getNumRows();y++){
+        for(int x=0;x<getNumCols();x++){
             double val = this->data[y][x];
             this->data[y][x] = val*b;
         }
@@ -260,12 +276,13 @@ Matrix Matrix::crossProduct(Matrix &a, Matrix &b){
 }
 
 void Matrix::transpose(){
-    this->checkMatrix();
     std::vector<std::vector<double>> newMatrix;
-    if(this->numRows != this->numCols){
-        unsigned long int tmp = this->numCols;
-        this->numCols = this->numRows;
-        this->numRows = tmp;
+    unsigned long int numCols = this->getNumCols();
+    unsigned long int numRows = this->getNumRows();
+    if(numRows != numCols){
+        unsigned long int tmp = numCols;
+        numCols = numRows;
+        numRows = tmp;
     }
     for(int y=0;y<numRows;y++){
         std::vector<double> tmp;
@@ -275,9 +292,9 @@ void Matrix::transpose(){
         newMatrix.push_back(tmp);
     }
     this->data.clear();
-    for(int y=0;y<this->numRows;y++){
+    for(int y=0;y<numRows;y++){
         std::vector<double> temp;
-        for(int x=0;x<this->numCols;x++){
+        for(int x=0;x<numCols;x++){
             temp.push_back(newMatrix[y][x]);
         }
         this->data.push_back(temp);
@@ -291,15 +308,15 @@ void Matrix::checkMatrix(){
     }
 }
 
-Matrix Matrix::operator +(Matrix const &obj){
+Matrix Matrix::operator +(Matrix &obj){
     Matrix result;
-    if((this->numRows != obj.numRows)||(this->numCols != obj.numCols)){
+    if((this->getNumRows() != obj.getNumRows())||(this->getNumCols() != obj.getNumCols())){
         std::cout<<"ERROR: Columns and Rows must match."<<std::endl;
         exit(1);
     }else{
-        for(int y=0;y<this->numRows;y++){
+        for(int y=0;y<this->getNumRows();y++){
             std::vector<double> temp;
-            for(int x=0;x<this->numCols;x++){
+            for(int x=0;x<this->getNumCols();x++){
                 double val = this->data[y][x];
                 temp.push_back(val + obj.data[y][x]);
             }
@@ -309,15 +326,15 @@ Matrix Matrix::operator +(Matrix const &obj){
     return result;
 }
 
-Matrix Matrix::operator -(Matrix const &obj){
+Matrix Matrix::operator -(Matrix &obj){
     Matrix result;
-    if((this->numRows != obj.numRows)||(this->numCols != obj.numCols)){
+    if((this->getNumRows() != obj.getNumRows())||(this->getNumCols() != obj.getNumCols())){
         std::cout<<"ERROR: Columns and Rows must match."<<std::endl;
         exit(1);
     }else{
-        for(int y=0;y<this->numRows;y++){
+        for(int y=0;y<this->getNumRows();y++){
             std::vector<double> temp;
-            for(int x=0;x<this->numCols;x++){
+            for(int x=0;x<this->getNumCols();x++){
                 double val = this->data[y][x];
                 temp.push_back(val - obj.data[y][x]);
             }
@@ -329,6 +346,7 @@ Matrix Matrix::operator -(Matrix const &obj){
 
 Matrix Matrix::operator *(Matrix &obj){ //Cross product
     std::cout<<"STATUS: Preforming cross product"<<std::endl;
+    
     if(this->getNumCols() == obj.getNumRows()){
         Matrix result(this->getNumRows(),obj.getNumCols());
         for(int y=0;y<result.getNumRows();y++){
@@ -348,10 +366,10 @@ Matrix Matrix::operator *(Matrix &obj){ //Cross product
 }
 Matrix Matrix::operator ->*(Matrix &obj){ //Hadamard product
     std::cout<<"STATUS: Preforming hadamard product"<<std::endl;
-    if(this->numRows == obj.getNumRows() && this->numCols == obj.getNumCols()){
+    if(this->getNumRows() == obj.getNumRows() && this->getNumCols() == obj.getNumCols()){
         Matrix result(this->getNumRows(),obj.getNumCols());
-        for(int y=0;y<numRows;y++){
-            for(int x=0;x<numCols;x++){
+        for(int y=0;y<getNumRows();y++){
+            for(int x=0;x<getNumCols();x++){
                 double val = this->data[y][x];
                 result.data[y][x] = val*obj.data[y][x];
             }
@@ -364,10 +382,10 @@ Matrix Matrix::operator ->*(Matrix &obj){ //Hadamard product
 }
 
 Matrix Matrix::operator *(double &obj){ //Scalar product
-    Matrix result(this->numRows,this->numCols);
+    Matrix result(this->getNumRows(),this->getNumCols());
     std::cout<<"STATUS: Preforming scalar product"<<std::endl;
-    for(int y=0;y<numRows;y++){
-        for(int x=0;x<numCols;x++){
+    for(int y=0;y<getNumRows();y++){
+        for(int x=0;x<getNumCols();x++){
             double val = this->data[y][x];
             result.data[y][x] = val*obj;
         }

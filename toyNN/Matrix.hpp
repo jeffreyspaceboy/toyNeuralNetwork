@@ -20,8 +20,6 @@
 
 class Matrix{
     private:
-        unsigned long int numRows;
-        unsigned long int numCols;
         std::vector<std::vector<double>> data;
     public:
         Matrix();
@@ -49,6 +47,7 @@ class Matrix{
     
         void add(Matrix b);
         void add(double b);
+        void vectorSum(Matrix &b);
         void subtract(Matrix b);
         void subtract(double b);
         Matrix subtract(Matrix &a, Matrix &b);
@@ -59,8 +58,8 @@ class Matrix{
         void transpose();
         void checkMatrix();
     
-        Matrix operator +(Matrix const &obj);
-        Matrix operator -(Matrix const &obj);
+        Matrix operator +(Matrix &obj);
+        Matrix operator -(Matrix &obj);
         Matrix operator *(Matrix &obj);
         Matrix operator ->*(Matrix &obj);
         Matrix operator *(double &obj);

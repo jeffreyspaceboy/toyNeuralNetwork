@@ -18,12 +18,13 @@ class NeuralNetwork{
         std::vector<int> numNodes; //Address = layer, value = number of nodes in layer
         std::vector<Layer> layers;
         double learningRate = 0.2;
-        int trainingRuns = 1000;
+        int trainingRuns = 50000;
     public:
         NeuralNetwork();
         NeuralNetwork(std::vector<int> numNodes);
         NeuralNetwork(const NeuralNetwork &obj);
         ~NeuralNetwork();
+        Matrix feedForward(std::vector<std::vector<double>> inputData);
         void train(std::vector<std::vector<double>> inputData, std::vector<std::vector<double>> targetData);
         std::vector<std::vector<double>> predict(std::vector<std::vector<double>> inputData);
 };

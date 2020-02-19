@@ -38,7 +38,7 @@ class Layer{
         void randomize(int lowerBound, int upperBound);
         void setInputs(Matrix data, bool doTranspose);
     
-        Matrix getOutputs();
+        Matrix solveForOutputs();
         Matrix getInputs();
         Matrix getWeights();
         Matrix getBiases();

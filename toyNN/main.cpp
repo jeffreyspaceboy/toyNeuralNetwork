@@ -38,21 +38,24 @@ std::vector<std::vector<double>> checkInputs =
 */
 
 std::vector<std::vector<double>> inputs =
-{{0,0},{10,10},{4,4},{6,6},{2,1},{8,5},{5,7.5},{1,6},{6,1},{8,8},{0,8}
+{
+    {0,0},{10,10},{4,4},{6,6},{2,1},{8,5},{5,7.5},{1,6},{6,1},{8,8},{0,8}
 }; //Input trainging data.
 
 std::vector<std::vector<double>> targets =
-{{0},{1},{0},{1},{0},{1},{1},{0},{0},{1},{0}
+{
+    {0},{1},{0},{1},{0},{1},{1},{0},{0},{1},{0}
 }; //Correct output values for the input training data.
 
 std::vector<std::vector<double>> checkInputs =
-{{4,4}};
-std::vector<int> numNodes = {2,2,1}; //2 Inputs, 2 Hidden, and 1 Output
+{
+    {0,0},{2,1},{10,10},{5,7.5}
+};
+std::vector<int> numNodes = {2,2,1};
 
 int main(){
     NeuralNetwork myToyNN(numNodes);
     myToyNN.train(inputs, targets);
-    std::cout<<"STATUS: Finishing..."<<std::endl;
     myToyNN.predict(checkInputs);
     return 0;
 }

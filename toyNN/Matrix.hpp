@@ -16,7 +16,6 @@
 #include <vector>
 #include <math.h>
 
-#define maxDataSize 128
 
 class Matrix{
     private:
@@ -31,7 +30,6 @@ class Matrix{
         void print();
     
         void fillFrom(std::vector<std::vector<double>> &vect);
-        void fillFrom(double array[maxDataSize][maxDataSize]);
         void randomize(int lowerBound, int upperBound);
     
         unsigned long int getNumRows();
@@ -53,7 +51,6 @@ class Matrix{
         Matrix subtract(Matrix &a, Matrix &b);
         void hadamardProduct(Matrix b);
         void scalarProduct(double b);
-        Matrix crossProduct(Matrix &a, Matrix &b);
     
         void transpose();
         void checkMatrix();
@@ -63,6 +60,7 @@ class Matrix{
         Matrix operator *(Matrix &obj);
         Matrix operator ->*(Matrix &obj);
         Matrix operator *(double &obj);
+        void roundToBool();
         
 };
 

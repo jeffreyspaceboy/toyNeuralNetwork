@@ -8,9 +8,7 @@
 
 #include "Layer.hpp"
 
-Layer::Layer(){
-    //Do Nothing
-}
+Layer::Layer(){}
 
 Layer::Layer(int numStartNodes,int numEndNodes){
     Matrix inputs(numStartNodes,1);
@@ -22,6 +20,7 @@ Layer::Layer(int numStartNodes,int numEndNodes){
     this->biases = biases;
     this->outputs = outputs;
     
+    this->randomize(-1,1);
     
     Matrix inputsT(1,numStartNodes);
     this->inputsT = inputsT;
@@ -37,6 +36,7 @@ Layer::Layer(int numStartNodes,int numEndNodes){
     this->weightsDelta = weightsDelta;
     Matrix inputError(numStartNodes,1);
     this->inputError = inputError;
+    
 }
 
 Layer::Layer(const Layer &obj){
@@ -45,11 +45,17 @@ Layer::Layer(const Layer &obj){
     this->weights = obj.weights;
     this->biases = obj.biases;
     this->outputs = obj.outputs;
+
+    this->inputsT = obj.inputsT;
+    this->weightsT = obj.weightsT;
+    
+    this->outputError = obj.outputError;
+    this->gradient = obj.gradient;
+    this->weightsDelta = obj.weightsDelta;
+    this->inputError = obj.inputError;
 }
 
-Layer::~Layer(void){
-    //std::cout<<"STATUS: Clearing Layer"<<std::endl;
-}
+Layer::~Layer(void){}
 
 void Layer::randomize(int lowerBound, int upperBound){
     this->weights.randomize(lowerBound, upperBound);
@@ -58,37 +64,25 @@ void Layer::randomize(int lowerBound, int upperBound){
 
 void Layer::setInputs(Matrix data, bool doTranspose){
     this->inputs = data;
-    if(doTranspose)
+    if(doTranspose){
         this->inputs.transpose();
+    }
 }
 
-Matrix Layer::getOutputs(){
-    randomize(-15, 15);
-    this->outputs = this->outputs.crossProduct(this->weights,this->inputs);
-    //this->outputs.print();
-    this->outputs.vectorSum(this->biases);
+Matrix Layer::solveForOutputs(){
+    this->outputs = this->weights * this->inputs;
+    this->outputs.add(this->biases);
     this->outputs.sigmoid();
     return this->outputs;
 }
 
-Matrix Layer::getInputs(){
-    return this->inputs;
-}
+Matrix Layer::getInputs(){return this->inputs;}
 
-Matrix Layer::getWeights(){
-    return this->weights;
-}
+Matrix Layer::getWeights(){return this->weights;}
 
-Matrix Layer::getBiases(){
-    return this->biases;
-}
+Matrix Layer::getBiases(){return this->biases;}
 
-//Matrix outError;
-//outError = outError.subtract();
-
-void Layer::setWeightsDelta(Matrix &obj){
-    this->weightsDelta = obj;
-}
+void Layer::setWeightsDelta(Matrix &obj){this->weightsDelta = obj;}
 
 void Layer::setWeightsTransposed(){
     Matrix temp(this->weights);

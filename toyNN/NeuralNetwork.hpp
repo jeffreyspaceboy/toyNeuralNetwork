@@ -16,21 +16,27 @@
 class NeuralNetwork{
     private:
         std::vector<int> numNodes; //Address = layer, value = number of nodes in layer
+        std::string fileName = "myNeuralNetwork.txt";
         std::vector<Layer> layers;
         double learningRate = 0.2;
         int trainingRuns = 50000;
     public:
         NeuralNetwork();
-        NeuralNetwork(std::vector<int> numNodes);
+        NeuralNetwork(std::vector<int> numNodes,std::string fileName);
         NeuralNetwork(std::string fileName);
         NeuralNetwork(const NeuralNetwork &obj);
         ~NeuralNetwork();
+        void setupNetworkFromFile();
         Matrix feedForward(std::vector<std::vector<double>> inputData);
         void train(std::vector<std::vector<double>> inputData, std::vector<std::vector<double>> targetData);
         std::vector<std::vector<double>> predict(std::vector<std::vector<double>> inputData);
        
-        void saveWeightsFile(std::string fileName = "myNeuralNetwork.txt");
-        void getWeightsFile(std::string fileName = "myNeuralNetwork.txt");
+        void saveWeightsFile(std::string fileName);
+        void saveWeightsFile();
+        void getWeightsFile(std::string fileName);
+        void getWeightsFile();
+    
+        int checkNumNodesInFile();
 };
 
 #endif /* NeuralNetwork_hpp */

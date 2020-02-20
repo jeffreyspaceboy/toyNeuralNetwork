@@ -46,6 +46,8 @@ class Layer{
         void setWeightsDelta(Matrix &obj);
         void setWeightsTransposed();
         void setInputsTransposed();
+    
+        void roundToThousandths();
 };
 
 #endif /* Layer_hpp */

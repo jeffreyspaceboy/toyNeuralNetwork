@@ -365,3 +365,11 @@ void Matrix::roundToBool(){
         }
     }
 }
+
+void Matrix::roundToThousandths(){
+    for(int y=0;y<getNumRows();y++){
+        for(int x=0;x<getNumCols();x++){
+            this->data[y][x] = floor(this->data[y][x] * 1000.0 + 0.5)/1000;
+        }
+    }
+}

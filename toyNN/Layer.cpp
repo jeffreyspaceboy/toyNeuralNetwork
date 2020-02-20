@@ -73,6 +73,7 @@ Matrix Layer::solveForOutputs(){
     this->outputs = this->weights * this->inputs;
     this->outputs.add(this->biases);
     this->outputs.sigmoid();
+    this->outputs.roundToThousandths();
     return this->outputs;
 }
 
@@ -94,5 +95,10 @@ void Layer::setInputsTransposed(){
     Matrix temp(this->inputs);
     temp.transpose();
     this->inputsT = temp;
+}
+
+void Layer::roundToThousandths(){
+    this->weights.roundToThousandths();
+    this->biases.roundToThousandths();
 }
 

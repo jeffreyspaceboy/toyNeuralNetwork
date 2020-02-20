@@ -55,6 +55,8 @@ class Matrix{
         void transpose();
         void checkMatrix();
     
+        void roundToThousandths();
+    
         Matrix operator +(Matrix &obj);
         Matrix operator -(Matrix &obj);
         Matrix operator *(Matrix &obj);

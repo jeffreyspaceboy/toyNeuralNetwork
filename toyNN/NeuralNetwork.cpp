@@ -12,18 +12,35 @@
 
 NeuralNetwork::NeuralNetwork(){}
 
-NeuralNetwork::NeuralNetwork(std::vector<int> numNodes){
+NeuralNetwork::NeuralNetwork(std::vector<int> numNodes, std::string fileName){
+    this->fileName = fileName;
     this->numNodes = numNodes;
+    for(int i=0; i < (this->numNodes.size()-1) ; i++){
+        Layer newLayer(this->numNodes[i], this->numNodes[i+1]);
+        this->layers.push_back(newLayer);
+    }
+    this->getWeightsFile();
+}
+
+NeuralNetwork::NeuralNetwork(std::string fileName){
+    this->fileName = fileName;
+    this->getWeightsFile();
+}
+
+
+NeuralNetwork::NeuralNetwork(const NeuralNetwork &obj){
+    this->numNodes = obj.numNodes;
     for(int i=0; i < (this->numNodes.size()-1) ; i++){
         Layer newLayer(this->numNodes[i], this->numNodes[i+1]);
         this->layers.push_back(newLayer);
     }
 }
 
-NeuralNetwork::NeuralNetwork(std::string fileName){
-    NeuralNetwork result;
+NeuralNetwork::~NeuralNetwork(void){this->saveWeightsFile(this->fileName);}
+
+void NeuralNetwork::setupNetworkFromFile(){
     std::ifstream savedFile;
-    savedFile.open(fileName);
+    savedFile.open(this->fileName);
     if(savedFile.is_open()){
         int matrixInfo[4];
         std::string scannedValue;
@@ -53,19 +70,7 @@ NeuralNetwork::NeuralNetwork(std::string fileName){
         Layer newLayer(this->numNodes[i], this->numNodes[i+1]);
         this->layers.push_back(newLayer);
     }
-    this->getWeightsFile(fileName);
 }
-
-
-NeuralNetwork::NeuralNetwork(const NeuralNetwork &obj){
-    this->numNodes = obj.numNodes;
-    for(int i=0; i < (this->numNodes.size()-1) ; i++){
-        Layer newLayer(this->numNodes[i], this->numNodes[i+1]);
-        this->layers.push_back(newLayer);
-    }
-}
-
-NeuralNetwork::~NeuralNetwork(void){}
 
 Matrix NeuralNetwork::feedForward(std::vector<std::vector<double>> inputData){
     Matrix inputs(inputData);
@@ -111,6 +116,8 @@ void NeuralNetwork::train(std::vector<std::vector<double>> inputData, std::vecto
                 this->layers[k].inputError = this->layers[k].weightsT * this->layers[k].outputError;
                 this->layers[k-1].outputError = this->layers[k].inputError;
                 this->layers[k-1].outputs = this->layers[k].inputs;
+                
+                this->layers[k].roundToThousandths();
             }
         }
         
@@ -129,6 +136,39 @@ std::vector<std::vector<double>> NeuralNetwork::predict(std::vector<std::vector<
         finalOutput.print();
     }
     return inputData;
+}
+
+int NeuralNetwork::checkNumNodesInFile(){
+    std::ifstream savedFile;
+    savedFile.open(fileName);
+    if(savedFile.is_open()){
+        int matrixInfo[4];
+        std::string scannedValue;
+        std::vector<int> numNodes;
+        while(!savedFile.eof()){
+            std::getline(savedFile, scannedValue);
+            if(scannedValue == "~"){
+                for(int j=0;j<4;j++){
+                    std::getline(savedFile, scannedValue, ' ');
+                    matrixInfo[j] = std::stoi(scannedValue);
+                }
+                if(matrixInfo[1]==0){
+                    if(matrixInfo[0] == 0){
+                        numNodes.push_back(matrixInfo[3]);
+                    }
+                    numNodes.push_back(matrixInfo[2]);
+                }
+            }
+        }
+        savedFile.close();
+        if(this->numNodes == numNodes){
+            return 1;
+        }else{
+            return 0;
+        }
+    } else {
+        return 2;
+    }
 }
 
 void NeuralNetwork::saveWeightsFile(std::string fileName){
@@ -162,8 +202,22 @@ void NeuralNetwork::saveWeightsFile(std::string fileName){
     saveFile.close();
 }
 
+void NeuralNetwork::saveWeightsFile(){this->saveWeightsFile(this->fileName);}
+
+
 void NeuralNetwork::getWeightsFile(std::string fileName){
-    //NeuralNetwork result;
+    int numNodesInFile = this->checkNumNodesInFile();
+    if(numNodesInFile == 0){
+        std::cout<<"WARNING: File data dimentions do not match this Neural Network."<<std::endl;
+        std::cout<<"Would you like to override your current network? (y:n)"<<std::endl;
+        char ans;
+        std::cin >> ans;
+        if(ans=='y' || ans=='Y'){
+            this->layers.clear();
+            this->numNodes.clear();
+            this->setupNetworkFromFile();
+        }
+    }
     std::ifstream savedFile;
     savedFile.open(fileName);
     if(savedFile.is_open()){
@@ -189,13 +243,9 @@ void NeuralNetwork::getWeightsFile(std::string fileName){
             }
         }
     } else {
-        std::cout<<"ERROR: Could not open file."<<std::endl;
-        exit(1);
+        std::cout<<"ERROR: Could not open file. Error will be ignored, and file will be created later."<<std::endl;
     }
-    
 }
 
-//Layer newLayer(mat, this->numNodes[i+1]);
-//this->layers.push_back(newLayer);
-//
-//result.layers.push_back();
+void NeuralNetwork::getWeightsFile(){this->getWeightsFile(this->fileName);}
+

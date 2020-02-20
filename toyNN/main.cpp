@@ -53,7 +53,7 @@ std::vector<std::vector<double>> checkInputs =
 std::vector<int> numNodes = {3,8,6};
 
 int main(){
-    NeuralNetwork myToyNN(numNodes,"testing.txt");
+    NeuralNetwork myToyNN(numNodes,"colorDetector.txt");
     //myToyNN.train(inputs, targets);
     myToyNN.predict(checkInputs);
     std::cout<<"Done"<<std::endl;

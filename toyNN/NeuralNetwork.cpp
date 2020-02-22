@@ -135,7 +135,7 @@ std::vector<std::vector<double>> NeuralNetwork::predict(std::vector<std::vector<
         Matrix finalOutput(this->feedForward(inputData));
         finalOutput.print();
     }
-    return inputData;
+    return inputData; //UMMMM?
 }
 
 int NeuralNetwork::checkNumNodesInFile(){

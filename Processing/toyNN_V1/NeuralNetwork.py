@@ -1,35 +1,26 @@
-from Matrix import *
 
-#IGEN
+from Layer import *
+from ActivationFunction import *
 
-def sigmoid(x,r,c):
-    return (1/(1 + exp(-x)))
-def dSigmoid(y,r,c):
-    return (y * (1-y))
-
-
-class ActivationFunction:
-    def __init__(self, func, dfunc):
-        self.func = func
-        self.dfunc = dfunc
-    
-Sigmoid = ActivationFunction(sigmoid,dSigmoid)
 
 class NeuralNetwork:
-    def __init__(self, inNodes, hidNodes, outNodes):
-        self.inNodes = inNodes
-        self.hidNodes = hidNodes
-        self.outNodes = outNodes
+    def __init__(self, numNodes):
+        self.layers = []
+        for i in range(len(numNodes)-1):
+            self.layers.append(Layer(numNodes[i],numNodes[i+1]))
+        self.inNodes = numNodes[0]
+        self.hidNodes = numNodes[1]
+        self.outNodes = numNodes[2]
         
         self.in2Hid_Weights = Matrix(self.hidNodes, self.inNodes)
         self.hid2Out_Weights = Matrix(self.outNodes, self.hidNodes)
         self.hid_Bias = Matrix(self.hidNodes, 1)
         self.out_Bias = Matrix(self.outNodes, 1)
         
-        self.in2Hid_Weights.Randomize()
-        self.hid2Out_Weights.Randomize()
-        self.hid_Bias.Randomize()
-        self.out_Bias.Randomize()
+        self.in2Hid_Weights.randomize(-1,1)
+        self.hid2Out_Weights.randomize(-1,1)
+        self.hid_Bias.randomize(-1,1)
+        self.out_Bias.randomize(-1,1)
         
         self.learningRate = 0.2
         
@@ -40,11 +31,11 @@ class NeuralNetwork:
         
     def predict(self, inputArray):
         input = fromArray(inputArray)
-        hidden = Multiply(self.in2Hid_Weights,input)
-        hidden.Add(self.hid_Bias)
+        hidden = self.in2Hid_Weights * input #Cross Product
+        hidden = hidden + self.hid_Bias
         hidden.Map(self.activationFunction.func)
-        output = Multiply(self.hid2Out_Weights,hidden)
-        output.Add(self.out_Bias)
+        output = self.hid2Out_Weights * hidden #Cross Product
+        output = output + self.out_Bias
         output.Map(self.activationFunction.func)
         return output.toArray()
     
@@ -52,36 +43,33 @@ class NeuralNetwork:
         input = fromArray(inputArray)
         target = fromArray(targetArray)
 
-        hidden = Multiply(self.in2Hid_Weights,input)
-        hidden.Add(self.hid_Bias)
+        hidden = self.in2Hid_Weights * input #Cross Product
+        hidden = hidden + self.hid_Bias
         hidden.Map(self.activationFunction.func)
-        output = Multiply(self.hid2Out_Weights,hidden)
-        output.Add(self.out_Bias)
+        output = self.hid2Out_Weights * hidden #Cross Product
+        output = output + self.out_Bias
         output.Map(self.activationFunction.func)
 
-        outError = Subtract(target,output)
+        outError = target - output
         
         gradient = Map(output, self.activationFunction.dfunc)
         
-        gradient.Multiply(outError)
-        gradient.Multiply(self.learningRate)
+        gradient = gradient ** outError #Hadamard Product
+        gradient = gradient * self.learningRate #Scalar Product
         
-        hiddenT = Transpose(hidden) 
-        delta_hid2Out_Weights = Multiply(gradient,hiddenT)
+        delta_hid2Out_Weights = gradient * (~hidden) #Cross Product
 
-        self.hid2Out_Weights.Add(delta_hid2Out_Weights)
-        self.out_Bias.Add(gradient)
+        self.hid2Out_Weights = self.hid2Out_Weights + delta_hid2Out_Weights
+        self.out_Bias = self.out_Bias + gradient
         
-        hid2Out_WeightsT = Transpose(self.hid2Out_Weights)
-        hidError = Multiply(hid2Out_WeightsT,outError)
+        hidError = (~self.hid2Out_Weights) * outError #Cross Product
 
         hidGradient = Map(hidden, self.activationFunction.dfunc)
-        hidGradient.Multiply(hidError)
-        hidGradient.Multiply(self.learningRate)
+        hidGradient = hidGradient ** hidError #Hadamard Product
+        hidGradient = hidGradient * self.learningRate #Scalar Product
         
-        inputT = Transpose(input)
-        delta_in2Hid_Weights = Multiply(hidGradient,inputT)
+        delta_in2Hid_Weights = hidGradient * (~input) #Cross Product
         
-        self.in2Hid_Weights.Add(delta_in2Hid_Weights)
-        self.hid_Bias.Add(hidGradient)
+        self.in2Hid_Weights = self.in2Hid_Weights + delta_in2Hid_Weights
+        self.hid_Bias = self.hid_Bias + hidGradient
     

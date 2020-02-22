@@ -7,24 +7,22 @@ class Matrix():
             self.data.append([]);
             for c in range(self.cols):
                 self.data[r].append(0);
-    def Map(self,func):
-        for r in range(self.rows):
-            for c in range(self.cols):
-                val = self.data[r][c];
-                self.data[r][c] = func(val, r, c);
-        return self;
-
-    def toArray(self):
-        arr = [];
-        for r in range(self.rows):
-            for c in range(self.cols):
-                arr.append(self.data[r][c]);
-        return arr;
-
+        
     def randomize(self,lowerBound, upperBound):
-        return Map(self,lambda e,r,c: random(lowerBound,upperBound));    
+        self.Map(lambda e,r,c: random(lowerBound,upperBound));    
 
     def __add__(self, b):
+        if isinstance(b, Matrix):
+            if (self.rows != b.rows)or(self.cols != b.cols):
+                print("ERROR: Matrix dimentions must match.");
+                return;
+            result = Map(self,lambda e,r,c: e + b.data[r][c]);
+            return result;
+        else:
+            result = Map(self,lambda e,r,c: e + b);
+            return result;
+        
+    def __iadd__(self, b):
         if isinstance(b, Matrix):
             if (self.rows != b.rows)or(self.cols != b.cols):
                 print("ERROR: Matrix dimentions must match.");
@@ -75,14 +73,28 @@ class Matrix():
                    
     def __invert__(self):
         return Map(Matrix(self.cols, self.rows),lambda e,r,c: self.data[c][r]);
-        
     
     def Print(self):
         for r in range(self.rows):
             print(self.data[r]);
+            
+    def toArray(self):
+        arr = [];
+        for r in range(self.rows):
+            for c in range(self.cols):
+                arr.append(self.data[r][c]);
+        return arr;
+    
+    def Map(self,func):
+        for r in range(self.rows):
+            for c in range(self.cols):
+                val = self.data[r][c];
+                self.data[r][c] = func(val, r, c);
+        return self;
         
 def fromArray(arr):
-    return Map(Matrix(len(arr), len(arr[0])),lambda e,r,c: arr[r][c]);    
+    return Map(Matrix(len(arr), 1),lambda e,r,c: arr[r]);    
+    #return Map(Matrix(len(arr), len(arr[0])),lambda e,r,c: arr[r][c]);   
     
 def Map(matrix, func):
     return Matrix(matrix.rows, matrix.cols).Map(lambda e,r,c: func(matrix.data[r][c], r, c));

@@ -1,75 +1,54 @@
-
 from Layer import *
-from ActivationFunction import *
-
 
 class NeuralNetwork:
     def __init__(self, numNodes):
+        self.numNodes = numNodes
         self.layers = []
         for i in range(len(numNodes)-1):
             self.layers.append(Layer(numNodes[i],numNodes[i+1]))
-        self.inNodes = numNodes[0]
-        self.hidNodes = numNodes[1]
-        self.outNodes = numNodes[2]
-        
-        self.in2Hid_Weights = Matrix(self.hidNodes, self.inNodes)
-        self.hid2Out_Weights = Matrix(self.outNodes, self.hidNodes)
-        self.hid_Bias = Matrix(self.hidNodes, 1)
-        self.out_Bias = Matrix(self.outNodes, 1)
-        
-        self.in2Hid_Weights.randomize(-1,1)
-        self.hid2Out_Weights.randomize(-1,1)
-        self.hid_Bias.randomize(-1,1)
-        self.out_Bias.randomize(-1,1)
-        
-        self.learningRate = 0.2
-        
-        self.setActivationFunction()
+            self.layers[i].randomize(-1,1);
+            
+        self.learningRate = 0.2;
+        self.trainingRuns = 5000;
+        self.setActivationFunction(Sigmoid)
       
     def setActivationFunction(self, func = Sigmoid):
-        self.activationFunction = func
-        
+        self.activationFunction = func;
+        for i in range(len(self.layers)):
+            self.layers[i].setActivationFunction(Sigmoid);
+    
+    def feedForward(self, inputData):
+        inputs = fromArray(inputData);
+        self.layers[0].setInputs(inputs, False);
+        for i in range(1,len(self.layers)):
+            self.layers[i].setInputs(self.layers[i-1].solveForOutputs(), False);
+        return (self.layers[len(self.layers)-1].solveForOutputs());
+    
     def predict(self, inputArray):
-        input = fromArray(inputArray)
-        hidden = self.in2Hid_Weights * input #Cross Product
-        hidden = hidden + self.hid_Bias
-        hidden.Map(self.activationFunction.func)
-        output = self.hid2Out_Weights * hidden #Cross Product
-        output = output + self.out_Bias
-        output.Map(self.activationFunction.func)
-        return output.toArray()
+        return self.feedForward(inputArray).toArray();
     
-    def train(self, inputArray, targetArray):
-        input = fromArray(inputArray)
-        target = fromArray(targetArray)
-
-        hidden = self.in2Hid_Weights * input #Cross Product
-        hidden = hidden + self.hid_Bias
-        hidden.Map(self.activationFunction.func)
-        output = self.hid2Out_Weights * hidden #Cross Product
-        output = output + self.out_Bias
-        output.Map(self.activationFunction.func)
-
-        outError = target - output
-        
-        gradient = Map(output, self.activationFunction.dfunc)
-        
-        gradient = gradient ** outError #Hadamard Product
-        gradient = gradient * self.learningRate #Scalar Product
-        
-        delta_hid2Out_Weights = gradient * (~hidden) #Cross Product
-
-        self.hid2Out_Weights = self.hid2Out_Weights + delta_hid2Out_Weights
-        self.out_Bias = self.out_Bias + gradient
-        
-        hidError = (~self.hid2Out_Weights) * outError #Cross Product
-
-        hidGradient = Map(hidden, self.activationFunction.dfunc)
-        hidGradient = hidGradient ** hidError #Hadamard Product
-        hidGradient = hidGradient * self.learningRate #Scalar Product
-        
-        delta_in2Hid_Weights = hidGradient * (~input) #Cross Product
-        
-        self.in2Hid_Weights = self.in2Hid_Weights + delta_in2Hid_Weights
-        self.hid_Bias = self.hid_Bias + hidGradient
-    
+    def train(self, inputData, targetData):
+        if((len(inputData[0]) != self.numNodes[0]) or (len(targetData[0]) != self.numNodes[-1])):
+            print("ERROR: Training data dimentions do not match network dimentions.");
+            exit();
+        else:
+            for i in range(self.trainingRuns): #Repeat until model has ran for desired number of training runs
+                x = floor(random(0,len(inputData)-1));
+                trainingOutputs = self.feedForward(inputData[x]); #Matrix of outputs from the training run
+                trainingTargets = fromArray(targetData[x]);  #Matrix of targets from the training run
+                trainingTargets = ~trainingTargets;
+                
+                self.layers[len(self.layers)-1].outputError = trainingTargets - trainingOutputs;
+                self.layers[len(self.layers)-1].outputs = trainingOutputs;
+                
+                for k in range((len(self.layers)-1),0,-1):
+                    self.layers[k].gradient = Map(self.layers[k].outputs, self.activationFunction.dfunc);
+                    self.layers[k].gradient = (self.layers[k].gradient ** self.layers[k].outputError) * self.learningRate;
+                    self.layers[k].weightsDelta = self.layers[k].gradient * (~self.layers[k].inputs);
+                    self.layers[k].weights = self.layers[k].weights + self.layers[k].weightsDelta;
+                    self.layers[k].biases = self.layers[k].biases + self.layers[k].gradient;
+                    self.layers[k].inputError = (~self.layers[k].weights) * self.layers[k].outputError;
+                    self.layers[k-1].outputError = self.layers[k].inputError;
+                    self.layers[k-1].outputs = self.layers[k].inputs;
+                    
+                    

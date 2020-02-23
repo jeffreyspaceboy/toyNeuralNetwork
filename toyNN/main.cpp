@@ -10,9 +10,6 @@
 #include <sstream>
 #include <fstream>
 #include "NeuralNetwork.hpp"
-#include <CoreImage/CoreImage.h>
-
-
 
 std::vector<std::vector<double>> inputs =
 {   {255,0,0},{252,43,43},{209,47,29},{207,21,0},{227,37,16},
@@ -23,7 +20,6 @@ std::vector<std::vector<double>> inputs =
     {0,255,255},{32,199,185},{58,208,235},{7,224,159},{76,245,194}
 }; //Input trainging data.
 
-
 std::vector<std::vector<double>> targets =
 {{1,0,0,0,0,0},{1,0,0,0,0,0},{1,0,0,0,0,0},{1,0,0,0,0,0},{1,0,0,0,0,0},
  {0,1,0,0,0,0},{0,1,0,0,0,0},{0,1,0,0,0,0},{0,1,0,0,0,0},{0,1,0,0,0,0},
@@ -33,9 +29,9 @@ std::vector<std::vector<double>> targets =
  {0,0,0,0,0,1},{0,0,0,0,0,1},{0,0,0,0,0,1},{0,0,0,0,0,1},{0,0,0,0,0,1}
 }; //Correct output values for the input training data.
 
-std::vector<std::vector<double>> checkInputs = {{2, 242, 170}};
-
 std::vector<int> numNodes = {3,8,6};
+
+std::vector<std::vector<double>> checkInputs = {{2, 242, 170}};
 
 int main(){
     NeuralNetwork myToyNN(numNodes,"colorDetector.txt");

@@ -9,7 +9,6 @@
 #ifndef NeuralNetwork_hpp
 #define NeuralNetwork_hpp
 
-#include <stdio.h>
 #include "Layer.hpp"
 #include "Matrix.hpp"
 
@@ -19,7 +18,7 @@ class NeuralNetwork{
         std::string fileName = "myNeuralNetwork.txt";
         std::vector<Layer> layers;
         double learningRate = 0.2;
-        int trainingRuns = 50000;
+        int trainingRuns = 1000;
     public:
         NeuralNetwork();
         NeuralNetwork(std::vector<int> numNodes,std::string fileName);

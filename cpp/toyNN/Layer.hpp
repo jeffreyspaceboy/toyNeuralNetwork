@@ -9,7 +9,6 @@
 #ifndef Layer_hpp
 #define Layer_hpp
 
-#include <stdio.h>
 #include "Matrix.hpp"
 
 class Layer{
@@ -29,8 +28,6 @@ class Layer{
         Matrix weightsDelta;
         Matrix inputError;
     
-        
-    
         Layer();
         Layer(int numStartNodes, int numEndNodes);
         Layer(const Layer &obj);
@@ -47,7 +44,7 @@ class Layer{
         void setWeightsTransposed();
         void setInputsTransposed();
     
-        void roundToThousandths();
+        void roundTo(double val);
 };
 
 #endif /* Layer_hpp */

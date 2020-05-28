@@ -20,7 +20,7 @@ Layer::Layer(int numStartNodes,int numEndNodes){
     this->biases = biases;
     this->outputs = outputs;
     
-    this->randomize(-1,1);
+    //this->randomize(-1,1);
     
     Matrix inputsT(1,numStartNodes);
     this->inputsT = inputsT;
@@ -65,15 +65,14 @@ void Layer::randomize(int lowerBound, int upperBound){
 void Layer::setInputs(Matrix data, bool doTranspose){
     this->inputs = data;
     if(doTranspose){
-        this->inputs.transpose();
+        this->inputs = this->inputs.transposed();//.transpose();
     }
 }
 
 Matrix Layer::solveForOutputs(){
-    this->outputs = this->weights * this->inputs;
-    this->outputs.add(this->biases);
+    this->outputs = (this->weights * this->inputs) + this->biases;
     this->outputs.sigmoid();
-    this->outputs.roundToThousandths();
+    this->outputs.roundTo(10000.0);
     return this->outputs;
 }
 
@@ -85,20 +84,8 @@ Matrix Layer::getBiases(){return this->biases;}
 
 void Layer::setWeightsDelta(Matrix &obj){this->weightsDelta = obj;}
 
-void Layer::setWeightsTransposed(){
-    Matrix temp(this->weights);
-    temp.transpose();
-    this->weightsT = temp;
-}
-
-void Layer::setInputsTransposed(){
-    Matrix temp(this->inputs);
-    temp.transpose();
-    this->inputsT = temp;
-}
-
-void Layer::roundToThousandths(){
-    this->weights.roundToThousandths();
-    this->biases.roundToThousandths();
+void Layer::roundTo(double val){
+    this->weights.roundTo(val);
+    this->biases.roundTo(val);
 }
 

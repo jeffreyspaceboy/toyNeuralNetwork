@@ -6,9 +6,6 @@
 //  Copyright © 2020 Jeffrey Fisher. All rights reserved.
 //
 
-#include <iostream>
-#include <sstream>
-#include <fstream>
 #include "NeuralNetwork.hpp"
 
 std::vector<std::vector<double>> inputs =
@@ -32,14 +29,12 @@ std::vector<std::vector<double>> targets =
 std::vector<int> numNodes = {3,8,6};
 
 std::vector<std::vector<double>> checkInputs = {{2, 242, 170}};
+//Red, Green, Blue, Magenta, Yellow, Cyan
 
-int main(){
-    NeuralNetwork myToyNN(numNodes,"colorDetector.txt");
-    //myToyNN.train(inputs, targets);
+int main( int argc, char** argv){
+    NeuralNetwork myToyNN(numNodes,"networkData/colorDetector.txt");
+    myToyNN.train(inputs, targets);
     myToyNN.predict(checkInputs);
     std::cout<<"Done"<<std::endl;
     return 0;
 }
-
-
-

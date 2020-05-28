@@ -7,8 +7,6 @@
 //
 
 #include "NeuralNetwork.hpp"
-#include <sstream>
-#include <fstream>
 
 NeuralNetwork::NeuralNetwork(){}
 
@@ -97,7 +95,7 @@ void NeuralNetwork::train(std::vector<std::vector<double>> inputData, std::vecto
             
             Matrix trainingOutputs(this->feedForward(trainingInput)); //Matrix of outputs from the training run
             Matrix trainingTargets(trainingTarget);  //Matrix of targets from the training run
-            trainingTargets.transpose();
+            trainingTargets = trainingTargets.transposed();
             
             this->layers[this->layers.size()-1].outputError = trainingTargets - trainingOutputs;
             this->layers[this->layers.size()-1].outputs = trainingOutputs;
@@ -107,17 +105,15 @@ void NeuralNetwork::train(std::vector<std::vector<double>> inputData, std::vecto
                 this->layers[k].gradient.dSigmoid();
                 this->layers[k].gradient = this->layers[k].gradient ->* this->layers[k].outputError;
                 this->layers[k].gradient = this->layers[k].gradient * this->learningRate;
-                this->layers[k].setInputsTransposed();
+                this->layers[k].inputsT = this->layers[k].inputs.transposed();
                 Matrix delt(this->layers[k].gradient * this->layers[k].inputsT);
                 this->layers[k].setWeightsDelta(delt);
                 this->layers[k].weights = this->layers[k].weights + this->layers[k].weightsDelta;
                 this->layers[k].biases = this->layers[k].biases + this->layers[k].gradient;
-                this->layers[k].setWeightsTransposed();
+                this->layers[k].weightsT = this->layers[k].weights.transposed();
                 this->layers[k].inputError = this->layers[k].weightsT * this->layers[k].outputError;
                 this->layers[k-1].outputError = this->layers[k].inputError;
                 this->layers[k-1].outputs = this->layers[k].inputs;
-                
-                this->layers[k].roundToThousandths();
             }
         }
         
@@ -135,7 +131,7 @@ std::vector<std::vector<double>> NeuralNetwork::predict(std::vector<std::vector<
         Matrix finalOutput(this->feedForward(inputData));
         finalOutput.print();
     }
-    return inputData; //UMMMM?
+    return inputData;
 }
 
 int NeuralNetwork::checkNumNodesInFile(){
@@ -244,6 +240,8 @@ void NeuralNetwork::getWeightsFile(std::string fileName){
         }
     } else {
         std::cout<<"ERROR: Could not open file. Error will be ignored, and file will be created later."<<std::endl;
+        for(int i=0; i<(layers.size()); i++)
+            this->layers[i].randomize(-1, 1);
     }
 }
 

@@ -140,27 +140,25 @@ Matrix Matrix::operator *(double &obj){ //SCALAR PRODUCT - overloading the * ope
 }
 
 Matrix Matrix::transposed(){ //TRANSPOSE - overloading the ~ operator
-    unsigned long int numRows = this->getNumCols();
-    unsigned long int numCols = this->getNumRows();
-    Matrix result(numRows,numCols);
+    Matrix result(this->getNumCols(),this->getNumRows());
     std::vector<std::vector<double>> newMatrix;
-    for(int y=0;y<numRows;y++){
-        for(int x=0;x<numCols;x++){ result.setData(y, x, this->data[x][y]); }
+    for(int y=0;y<this->getNumCols();y++){
+        for(int x=0;x<this->getNumRows();x++){ result.setData(y, x, this->data[x][y]); }
     }
     return result;
 }
 
 void Matrix::randomize(int lowerBound, int upperBound){
-    lowerBound = lowerBound*100;
-    upperBound = upperBound*100;
+    lowerBound *= 100;
+    upperBound *= 100;
     for(int y=0;y<(this->getNumRows());y++){
         for(int x=0;x<(this->getNumCols());x++){ this->data[y][x] = (double)(rand() % (upperBound-lowerBound+1) + lowerBound)/100; }
     }
 }
 
 void Matrix::roundTo(double val){
-    for(int y=0;y<getNumRows();y++){
-        for(int x=0;x<getNumCols();x++){ this->data[y][x] = floor(this->data[y][x] * val + 0.5)/val; }
+    for(int y=0;y<this->getNumRows();y++){
+        for(int x=0;x<this->getNumCols();x++){ this->data[y][x] = floor(this->data[y][x] * val + 0.5)/val; }
     }
 }
 
@@ -185,13 +183,3 @@ void Matrix::print(){
         std::cout<<this->data[y][getNumCols()-1]<<"]"<<std::endl;
     }
 }
-
-
-
-
-
-
-
-
-
-

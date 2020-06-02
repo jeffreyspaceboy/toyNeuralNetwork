@@ -100,20 +100,8 @@ void NeuralNetwork::train(std::vector<std::vector<double>> inputData, std::vecto
             this->layers[this->layers.size()-1].outputError = trainingTargets - trainingOutputs;
             this->layers[this->layers.size()-1].outputs = trainingOutputs;
             
-            for(unsigned long int k=this->layers.size()-1; k>0 ; k--){
-                this->layers[k].gradient = this->layers[k].outputs;
-                this->layers[k].gradient.dSigmoid();
-                this->layers[k].gradient = this->layers[k].gradient ->* this->layers[k].outputError;
-                this->layers[k].gradient = this->layers[k].gradient * this->learningRate;
-                this->layers[k].inputsT = this->layers[k].inputs.transposed();
-                Matrix delt(this->layers[k].gradient * this->layers[k].inputsT);
-                this->layers[k].setWeightsDelta(delt);
-                this->layers[k].weights = this->layers[k].weights + this->layers[k].weightsDelta;
-                this->layers[k].biases = this->layers[k].biases + this->layers[k].gradient;
-                this->layers[k].weightsT = this->layers[k].weights.transposed();
-                this->layers[k].inputError = this->layers[k].weightsT * this->layers[k].outputError;
-                this->layers[k-1].outputError = this->layers[k].inputError;
-                this->layers[k-1].outputs = this->layers[k].inputs;
+            for(unsigned long int k=this->layers.size()-1; k>0 ; k--){ //Backprop and Adjust weights.
+                this->layers[k].adjustWeights(this->layers[k-1].outputs, this->layers[k-1].outputError, this->learningRate);
             }
         }
         
@@ -196,6 +184,7 @@ void NeuralNetwork::saveWeightsFile(std::string fileName){
         saveFile << "\n";
     }
     saveFile.close();
+    std::cout<<"NOTICE: FILE HAS BEEN SAVED"<<std::endl;
 }
 
 void NeuralNetwork::saveWeightsFile(){this->saveWeightsFile(this->fileName);}
@@ -208,10 +197,12 @@ void NeuralNetwork::getWeightsFile(std::string fileName){
         std::cout<<"Would you like to override your current network? (y:n)"<<std::endl;
         char ans;
         std::cin >> ans;
-        if(ans=='y' || ans=='Y'){
+        if(ans=='n' || ans=='N'){
             this->layers.clear();
             this->numNodes.clear();
             this->setupNetworkFromFile();
+        }else{
+            return;
         }
     }
     std::ifstream savedFile;
@@ -239,7 +230,7 @@ void NeuralNetwork::getWeightsFile(std::string fileName){
             }
         }
     } else {
-        std::cout<<"ERROR: Could not open file. Error will be ignored, and file will be created later."<<std::endl;
+        std::cout<<"WARNING: Could not open file. Warning will be ignored, and file will be created later."<<std::endl;
         for(int i=0; i<(layers.size()); i++)
             this->layers[i].randomize(-1, 1);
     }

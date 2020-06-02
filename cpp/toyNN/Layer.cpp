@@ -89,3 +89,19 @@ void Layer::roundTo(double val){
     this->biases.roundTo(val);
 }
 
+    
+void Layer::adjustWeights(Matrix &prevOutputs, Matrix &prevOutputError, double &learningRate){
+    this->gradient = this->outputs;
+    this->gradient.dSigmoid();
+    this->gradient = this->gradient ->* this->outputError;
+    this->gradient = this->gradient * learningRate;
+    this->inputsT = this->inputs.transposed();
+    Matrix delt(this->gradient * this->inputsT);
+    this->setWeightsDelta(delt);
+    this->weights = this->weights + this->weightsDelta;
+    this->biases = this->biases + this->gradient;
+    this->weightsT = this->weights.transposed();
+    this->inputError = this->weightsT * this->outputError;
+    prevOutputError = this->inputError;
+    prevOutputs = this->inputs;
+}

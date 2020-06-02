@@ -12,9 +12,6 @@
 #include "Matrix.hpp"
 
 class Layer{
-    private:
-        //sig(W*in + b)=out
-        
     public:
         Matrix inputs;
         Matrix inputsT;
@@ -45,6 +42,8 @@ class Layer{
         void setInputsTransposed();
     
         void roundTo(double val);
+    
+        void adjustWeights(Matrix &prevOutputs, Matrix &prevOutputError, double &learningRate);
 };
 
 #endif /* Layer_hpp */

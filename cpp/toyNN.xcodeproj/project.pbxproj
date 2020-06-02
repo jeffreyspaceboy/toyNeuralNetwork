@@ -11,6 +11,7 @@
 		6D33A10623F200DB00EDFD0C /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D33A10423F200DB00EDFD0C /* Matrix.cpp */; };
 		6D506C7C23F3799B00E20A2D /* NeuralNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D506C7A23F3799B00E20A2D /* NeuralNetwork.cpp */; };
 		6D506C7F23F37F9300E20A2D /* Layer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D506C7D23F37F9300E20A2D /* Layer.cpp */; };
+		6DCA0AFE2486EA6E003E8916 /* Tensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DCA0AFC2486EA6E003E8916 /* Tensor.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,8 @@
 		6D506C7B23F3799B00E20A2D /* NeuralNetwork.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NeuralNetwork.hpp; sourceTree = "<group>"; };
 		6D506C7D23F37F9300E20A2D /* Layer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Layer.cpp; sourceTree = "<group>"; };
 		6D506C7E23F37F9300E20A2D /* Layer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Layer.hpp; sourceTree = "<group>"; };
+		6DCA0AFC2486EA6E003E8916 /* Tensor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tensor.cpp; sourceTree = "<group>"; };
+		6DCA0AFD2486EA6E003E8916 /* Tensor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tensor.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,10 +74,28 @@
 				6D506C7A23F3799B00E20A2D /* NeuralNetwork.cpp */,
 				6D506C7E23F37F9300E20A2D /* Layer.hpp */,
 				6D506C7D23F37F9300E20A2D /* Layer.cpp */,
+				6DCA0AFF2486EA73003E8916 /* Tensor */,
+				6DCA0AF72486E9A9003E8916 /* Matrix */,
+			);
+			path = toyNN;
+			sourceTree = "<group>";
+		};
+		6DCA0AF72486E9A9003E8916 /* Matrix */ = {
+			isa = PBXGroup;
+			children = (
 				6D33A10523F200DB00EDFD0C /* Matrix.hpp */,
 				6D33A10423F200DB00EDFD0C /* Matrix.cpp */,
 			);
-			path = toyNN;
+			path = Matrix;
+			sourceTree = "<group>";
+		};
+		6DCA0AFF2486EA73003E8916 /* Tensor */ = {
+			isa = PBXGroup;
+			children = (
+				6DCA0AFD2486EA6E003E8916 /* Tensor.hpp */,
+				6DCA0AFC2486EA6E003E8916 /* Tensor.cpp */,
+			);
+			path = Tensor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,6 +157,7 @@
 			files = (
 				6D33A10623F200DB00EDFD0C /* Matrix.cpp in Sources */,
 				6D33A0FE23F1FDA600EDFD0C /* main.cpp in Sources */,
+				6DCA0AFE2486EA6E003E8916 /* Tensor.cpp in Sources */,
 				6D506C7C23F3799B00E20A2D /* NeuralNetwork.cpp in Sources */,
 				6D506C7F23F37F9300E20A2D /* Layer.cpp in Sources */,
 			);

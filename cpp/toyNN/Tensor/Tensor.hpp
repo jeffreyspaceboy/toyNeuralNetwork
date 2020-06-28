@@ -21,7 +21,7 @@
 //#include <sstream>
 //#include <fstream>
 //#include <vector>
-//#include <math.h>
+#include <math.h>
 
 class Tensor{
     private:
@@ -63,11 +63,11 @@ class Tensor{
         Tensor operator +(const Tensor &obj); //Element-Wise Addition
         Tensor operator -(const Tensor &obj); //Element-Wise Subtraction
         Tensor operator *(const Tensor &obj); //Element-Wise Multiplication
+        Tensor operator *(const double &obj); //Element-Wise Multiplication with Scalar
         Tensor operator ->*(const Tensor &obj); //Matrix Multiplication
-        //Tensor operator ->*(const Tensor &obj);
-        //Tensor operator *(const double &obj);
-        //Matrix transposed();
-        //void randomize(int lowerBound, int upperBound);
+        
+        Tensor transposed();
+        void randomize(int lowerBound, int upperBound);
         //void roundTo(double val);
 
         //---Activation Functions---//

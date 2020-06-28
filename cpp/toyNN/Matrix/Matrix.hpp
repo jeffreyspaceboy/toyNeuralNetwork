@@ -6,19 +6,21 @@
 ////  Copyright © 2020 Jeffrey Fisher. All rights reserved.
 ////
 //
-//#ifndef Matrix_hpp
-//#define Matrix_hpp
+//
+////#define Matrix_hpp
+//#ifdef Matrix_hpp
+//
 //
 //#include <iostream>
-//#include <sstream>
-//#include <fstream>
-//#include <math.h>
+////#include <sstream>
+////#include <fstream>
+////#include <math.h>
 //
 //class Matrix{
 //    private:
-//        unsigned long int num_rows;
-//        unsigned long int num_cols;
-//        double *data = NULL;
+//        unsigned int y_size;
+//        unsigned int x_size;
+//        double **data = NULL;
 //    public:
 //        //---Constructors---//
 //        Matrix(unsigned long int rows, unsigned long int cols); //Size Based

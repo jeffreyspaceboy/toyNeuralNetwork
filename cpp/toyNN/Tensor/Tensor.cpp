@@ -167,7 +167,7 @@ Tensor Tensor::operator +(const Tensor &obj){ //Overloading add operator
         printf("ERROR: Dimensions must match.\n");
         exit(1);
     } //If tensor dimensions match, then do add.
-    Tensor newTensor(*this);
+    Tensor newTensor(this->x_size, this->y_size, this->z_size);
     unsigned int x,y,z;
     for(z = 0; z < this->z_size; z++) {
         for(y = 0; y < this->y_size; y++) {
@@ -185,7 +185,7 @@ Tensor Tensor::operator -(const Tensor &obj){ //Overloading subtract operator
         printf("ERROR: Dimensions must match.\n");
         exit(1);
     }//If tensor dimensions match, then do add.
-    Tensor newTensor(*this);
+    Tensor newTensor(this->x_size, this->y_size, this->z_size);
     unsigned int x,y,z;
     for(z = 0; z < this->z_size; z++) {
         for(y = 0; y < this->y_size; y++) {
@@ -197,17 +197,30 @@ Tensor Tensor::operator -(const Tensor &obj){ //Overloading subtract operator
     return newTensor;
 }
 
-Tensor Tensor::operator *(const Tensor &obj){ //Overloading subtract operator
+Tensor Tensor::operator *(const Tensor &obj){ //Overloading multiply operator
     if((this->get_x_size() != obj.x_size) || (this->get_y_size() != obj.y_size) || (this->get_z_size() != obj.z_size)){ //Check matrix dimensions.
         printf("ERROR: Dimensions must match.\n");
         exit(1);
     }//If tensor dimensions match, then do add.
-    Tensor newTensor(*this);
+    Tensor newTensor(this->x_size, this->y_size, this->z_size);
     unsigned int x,y,z;
     for(z = 0; z < this->z_size; z++) {
         for(y = 0; y < this->y_size; y++) {
             for(x = 0; x < this->x_size; x++){
                 newTensor.data[z][y][x] = this->data[z][y][x] * obj.data[z][y][x];
+            }
+        }
+    }
+    return newTensor;
+}
+
+Tensor Tensor::operator *(const double &obj){ //Overloading multiply operator
+    Tensor newTensor(this->x_size, this->y_size, this->z_size);
+    unsigned int x,y,z;
+    for(z = 0; z < this->z_size; z++) {
+        for(y = 0; y < this->y_size; y++) {
+            for(x = 0; x < this->x_size; x++){
+                newTensor.data[z][y][x] = this->data[z][y][x] * obj;
             }
         }
     }
@@ -236,6 +249,40 @@ Tensor Tensor::operator ->*(const Tensor &obj){ //CROSS PRODUCT - overloading th
     }
     return result;
 }
+
+Tensor Tensor::transposed(){ //TRANSPOSE - overloading the ~ operator
+    unsigned int numRows = this->x_size;
+    unsigned int numCols = this->y_size;
+    Tensor result(numRows,numCols,this->z_size);
+    unsigned int z,y,x;
+    for(z = 0; z < this->z_size; z++){
+        for(y = 0; y < numRows; y++){
+            for(x = 0; x < numCols; x++){
+                result.data[x][y][z] = this->data[z][x][y];
+            }
+        }
+    }
+    return result;
+}
+
+void Tensor::randomize(int lowerBound, int upperBound){
+    lowerBound = lowerBound*1000;
+    upperBound = upperBound*1000;
+    unsigned int z,y,x;
+    for(z = 0; z < this->z_size; z++){
+        for(y = 0; y < this->y_size; y++){
+            for(x = 0; x < this->x_size; x++){
+                this->data[z][y][x] = (double)(rand() % (upperBound-lowerBound+1) + lowerBound)/1000;
+            }
+        }
+    }
+}
+
+//        void roundTo(double val);
+//
+//        //---Activation Functions---//
+//        void sigmoid();
+//        void dSigmoid();
 
 
 

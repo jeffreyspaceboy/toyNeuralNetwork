@@ -198,8 +198,7 @@ void NeuralNetwork::saveWeightsFile(std::string fileName){
     saveFile.close();
 }
 
-void NeuralNetwork::saveWeightsFile(){this->saveWeightsFile(this->fileName);}
-
+void NeuralNetwork::saveWeightsFile(){ this->saveWeightsFile(this->fileName); }
 
 void NeuralNetwork::getWeightsFile(std::string fileName){
     int numNodesInFile = this->checkNumNodesInFile();

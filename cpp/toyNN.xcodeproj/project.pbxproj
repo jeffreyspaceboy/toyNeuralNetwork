@@ -124,7 +124,7 @@
 		6D33A0F223F1FDA600EDFD0C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = "Jeffrey Fisher";
 				TargetAttributes = {
 					6D33A0F923F1FDA600EDFD0C = {
@@ -278,6 +278,7 @@
 		6D33A10223F1FDA600EDFD0C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VZRXF5EA3K;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -298,6 +299,7 @@
 		6D33A10323F1FDA600EDFD0C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VZRXF5EA3K;
 				ENABLE_HARDENED_RUNTIME = YES;

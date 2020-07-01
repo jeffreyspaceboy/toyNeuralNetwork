@@ -278,13 +278,22 @@ void Tensor::randomize(int lowerBound, int upperBound){
     }
 }
 
-//        void roundTo(double val);
-//
-//        //---Activation Functions---//
-//        void sigmoid();
-//        void dSigmoid();
+void Tensor::roundTo(double val){
+    unsigned int z,y,x;
+    for(z = 0; z < this->z_size; z++){
+        for(y = 0; y < this->y_size; y++){
+            for(x = 0; x < this->x_size; x++){
+                this->data[z][y][x] = floor(this->data[z][y][x] * val + 0.5)/val;
+            }
+        }
+    }
+}
 
-
+//---Activation Functions---//
+double singleSigmoid(double val, unsigned int x, unsigned int y, unsigned int z){return (1/(1+(exp(-val))));}
+void Tensor::sigmoid(){ this->map(singleSigmoid); }
+double singleDSigmoid(double val, unsigned int x, unsigned int y, unsigned int z){return (singleSigmoid(val, x, y, z)*(1-singleSigmoid(val, x, y, z)));}
+void Tensor::dSigmoid(){ this->map(singleDSigmoid); }
 
 
 void Tensor::print(){

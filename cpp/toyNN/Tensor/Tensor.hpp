@@ -68,11 +68,11 @@ class Tensor{
         
         Tensor transposed();
         void randomize(int lowerBound, int upperBound);
-        //void roundTo(double val);
+        void roundTo(double val);
 
         //---Activation Functions---//
-        //void sigmoid();
-        //void dSigmoid();
+        void sigmoid();
+        void dSigmoid();
 
         //---Other---//
         //void checkMatrix();

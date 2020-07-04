@@ -14,19 +14,19 @@
 #include <iostream>
 //#include <sstream>
 //#include <fstream>
-//#include <math.h>
+#include <math.h>
 
 class Matrix{
     private:
-        unsigned int y_size; //Rows
-        unsigned int x_size; //Cols
-        unsigned int data_size; //Total
+        unsigned int y_size = 0; //Rows
+        unsigned int x_size = 0; //Cols
+        unsigned int data_size = 0; //Total
         double *data = NULL;
     public:
         //---Constructors---//
-        Matrix(double *data, unsigned int y_size, unsigned int x_size, bool randomize = false); //Size Based
-        Matrix(unsigned int y_size, unsigned int x_size, bool randomize = false); //Size Based
         Matrix(); //Standard
+        Matrix(double *data, unsigned int y_size, unsigned int x_size);
+        Matrix(unsigned int y_size, unsigned int x_size, bool randomize = false);
         //---Copy Constructors---//
         Matrix(const Matrix &obj);
         //---Destructors---//
@@ -38,10 +38,13 @@ class Matrix{
         unsigned int get_data_size();
         double *get_data();
         double get_data(unsigned int y, unsigned int x);
+        //POTENTIAL TODO: ADD GET DATA TRANSPOSED
+        
 
         //---Set---//
         void set_size(unsigned int y_size, unsigned int x_size);
         void set_data(double *data, unsigned int y_size, unsigned int x_size);
+        void set_data(double data, unsigned int y, unsigned int x);
 
         //---Operations---//
         void map(double func(double val, unsigned int y, unsigned int x));
@@ -51,20 +54,19 @@ class Matrix{
         Matrix operator -(Matrix &obj);
         Matrix operator *(Matrix &obj);
         Matrix operator ->*(Matrix &obj);
-        Matrix operator *(double &obj);
+        Matrix operator *(double obj);
     
-        void transpose();
         Matrix transposed();
     
-        void randomize(unsigned int lowerBound, unsigned int upperBound);
-        void roundTo(double val);
+        void randomize(int lowerBound, int upperBound);
+        void round_to(double val);
 
         //---Activation Functions---//
         void sigmoid();
         void dSigmoid();
 
         //---Other---//
-        void checkMatrix();
+        bool checkMatrix();
         void print();
 };
 #endif /* Matrix_hpp */

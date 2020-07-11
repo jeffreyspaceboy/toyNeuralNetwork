@@ -10,7 +10,9 @@
 #include <iostream>
 //#include <sstream>
 //#include "NeuralNetwork.hpp"
+#include "Matrix.hpp"
 #include "Tensor.hpp"
+
 
 
 //std::vector<std::vector<double>> inputs =
@@ -40,30 +42,36 @@ int main( int argc, char** argv){
 //    NeuralNetwork myToyNN(numNodes,"networkData/colorDetector.txt");
 //    myToyNN.train(inputs, targets);
 //    myToyNN.predict(checkInputs);
-    double A[] = {1,2,3,2,3,1,3,1,2,3,3,3,2,2,2,1,1,1};
-    double B[] = {3,3,3,2,2,2,1,1,1,1,2,3,2,3,1,3,1,2};
-    
-    Tensor testTensorA(A,3,3,2,"Tensor A");
-    Tensor testTensorB(B,3,3,2,"Tensor B");
-    
-    testTensorA.print();
+//    double A[] = {1,2,3,2,3,1,3,1,2,3,3,3,2,2,2,1,1,1};
+//    double B[] = {3,3,3,2,2,2,1,1,1,1,2,3,2,3,1,3,1,2};
+//
+//    Tensor testTensorA(A,3,3,2,"Tensor A");
+//    Tensor testTensorB(B,3,3,2,"Tensor B");
+//
+//    testTensorA.print();
+//    printf("\n");
+//    testTensorB.print();
+//    printf("\n");
+//    Tensor testTensorC = testTensorB ->* testTensorA;
+//    testTensorC.set_name("Tensor C");
+//
+//    //printf("Dim: (%d, %d, %d)\n",testTensor.get_x_size(),testTensor.get_y_size(),testTensor.get_z_size());
+//    testTensorA.print();
+//    printf("\n");
+//    testTensorB.print();
+//    printf("\n");
+//    testTensorC.print();
+//
+//
+//    Tensor testTensorD = testTensorB * testTensorA;
+//    printf("\n");
+//    testTensorD.print();
+    double a[] = {1,2,3,4,5,6};
+    Matrix A(a, 2, 3);
+    A.print();
     printf("\n");
-    testTensorB.print();
-    printf("\n");
-    Tensor testTensorC = testTensorB ->* testTensorA;
-    testTensorC.set_name("Tensor C");
-    
-    //printf("Dim: (%d, %d, %d)\n",testTensor.get_x_size(),testTensor.get_y_size(),testTensor.get_z_size());
-    testTensorA.print();
-    printf("\n");
-    testTensorB.print();
-    printf("\n");
-    testTensorC.print();
-    
-    
-    Tensor testTensorD = testTensorB * testTensorA;
-    printf("\n");
-    testTensorD.print();
+    Matrix B = A.transposed();
+    B.print();
     printf("Done\n");
     return 0;
 }

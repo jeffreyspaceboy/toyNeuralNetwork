@@ -6,9 +6,8 @@
 //  Copyright © 2020 Jeffrey Fisher. All rights reserved.
 //
 
-
+#ifndef Matrix_hpp
 #define Matrix_hpp
-#ifdef Matrix_hpp
 
 
 #include <iostream>
@@ -18,37 +17,36 @@
 
 class Matrix{
     private:
-        unsigned int y_size = 0; //Rows
-        unsigned int x_size = 0; //Cols
+        std::string name = "MatrixName";
         unsigned int data_size = 0; //Total
+        unsigned int data_shape[2] = {0,0}; //[Rows,Cols] or [y,x]
         double *data = NULL;
     public:
         //---Constructors---//
         Matrix(); //Standard
-        Matrix(double *data, unsigned int y_size, unsigned int x_size);
-        Matrix(unsigned int y_size, unsigned int x_size, bool randomize = false);
+        Matrix(double *data, unsigned int data_shape[2]);
+        Matrix(unsigned int data_shape[2], bool randomize = false);
         //---Copy Constructors---//
         Matrix(const Matrix &obj);
         //---Destructors---//
         ~Matrix();
 
         //---Get---//
-        unsigned int get_y_size();
-        unsigned int get_x_size();
+        unsigned int *get_data_shape();
         unsigned int get_data_size();
         double *get_data();
-        double get_data(unsigned int y, unsigned int x);
+        double get_data(unsigned int cell[2]);
         //POTENTIAL TODO: ADD GET DATA TRANSPOSED
         
 
         //---Set---//
-        void set_size(unsigned int y_size, unsigned int x_size);
-        void set_data(double *data, unsigned int y_size, unsigned int x_size);
-        void set_data(double data, unsigned int y, unsigned int x);
+        void set_shape(unsigned int data_shape[2]);
+        void set_data(double *data, unsigned int data_shape[2]);
+        void set_data(double data, unsigned int cell[2]);
 
         //---Operations---//
-        void map(double func(double val, unsigned int y, unsigned int x));
-        Matrix *map(Matrix *a, double func(double val, unsigned int y, unsigned int x));
+        void map(double func(double val, unsigned int cell[2]));
+        Matrix *map(Matrix *a, double func(double val, unsigned int cell[2]));
 
         Matrix operator +(Matrix &obj);
         Matrix operator -(Matrix &obj);

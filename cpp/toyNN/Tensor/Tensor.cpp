@@ -9,26 +9,39 @@
 #include "Tensor.hpp"
 
 //---Constructors---//
-Tensor::Tensor(double ***input_data, unsigned int x_size, unsigned int y_size, unsigned int z_size, std::string name){
-    this->set_data(input_data, x_size, y_size, z_size);
-    this->name = name;
-}
-
-Tensor::Tensor(double *input_data, unsigned int x_size, unsigned int y_size, unsigned int z_size, std::string name){
-    this->set_data(input_data, x_size, y_size, z_size);
-    this->name = name;
-}
-
-Tensor::Tensor(unsigned int x_size, unsigned int y_size, unsigned int z_size){
-    double ***input_data = NULL;
-    this->set_data(input_data, x_size, y_size, z_size);
-}
-
-
 Tensor::Tensor(){} //Standard Constructor
 
+Tensor::Tensor(double *data, unsigned int z_size, unsigned int y_size, unsigned int x_size){
+    this->z_size = z_size;
+    this->y_size = y_size;
+    this->x_size = x_size;
+    this->data_size = (z_size * y_size * x_size);
+    this->data = (double*)(malloc((this->data_size)*(sizeof(double))));
+    for(unsigned int i = 0; i < this->data_size; i++){
+        this->data[i] = data[i];
+    }
+}
+
+Tensor::Tensor(unsigned int z_size, unsigned int y_size, unsigned int x_size, bool randomize){
+    this->z_size = z_size;
+    this->y_size = y_size;
+    this->x_size = x_size;
+    this->data_size = (z_size * y_size * x_size);
+    this->data = (double*)(malloc((this->data_size)*(sizeof(double))));
+    if(randomize){
+        printf("ERROR: Not randomize function built in, must add to code\n");
+    }else{
+        for(unsigned int i = 0; i < this->data_size; i++){
+            this->data[i] = 0.0;
+        }
+    }
+}
+
+
 //---Copy Constructors---//
-Tensor::Tensor(const Tensor &obj){ this->copy_data(obj); } //Copy constructor
+Tensor::Tensor(const Tensor &obj){
+    this->copy_data(obj);
+} //Copy constructor
 
 //---Destructors---//
 Tensor::~Tensor(void){

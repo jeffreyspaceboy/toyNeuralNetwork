@@ -13,6 +13,7 @@ Shape::Shape(){}
 
 Shape::Shape(const unsigned int x_size, const unsigned int y_size){
     this->size = y_size * x_size;
+    this->d[2] = 1;
     this->d[1] = y_size;
     this->d[0] = x_size;
 }

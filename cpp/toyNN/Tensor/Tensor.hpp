@@ -57,7 +57,9 @@ class Tensor{
         void scalar_product(float obj);
 
         Tensor operator +(Tensor &obj);
+        Tensor operator +(float obj);
         Tensor operator -(Tensor &obj);
+        Tensor operator -(float obj);
         Tensor operator *(Tensor &obj);
         Tensor operator ->*(Tensor &obj);
         Tensor operator *(float obj);

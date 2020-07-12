@@ -14,7 +14,8 @@ Matrix::Matrix(float *data, Shape shape){ this->set_data(data, shape); }//Standa
 
 Matrix::Matrix(Shape shape, bool randomize){ //Zero or Randomize Constructor
     if(randomize){
-        this->set_data(this->random(-1, 1, 1000), shape);
+        this->set_shape(shape);
+        this->randomize(-1, 1, 1000);
     }else{
         this->set_data(0.0, shape);
     }
@@ -230,7 +231,11 @@ float Matrix::random(int lowerBound, int upperBound, int decimal_precision){
     return ((float)(rand() % (upperBound-lowerBound+1) + lowerBound)/decimal_precision);
 }
 
-void Matrix::randomize(int lowerBound, int upperBound, int decimal_precision){ this->set_data(this->random(lowerBound, upperBound, decimal_precision), this->shape); }
+void Matrix::randomize(int lowerBound, int upperBound, int decimal_precision){
+    for(unsigned int i = 0; i < this->shape.size; i++){
+        this->data[i] = random(lowerBound, upperBound, decimal_precision);
+    }
+}
 
 void Matrix::round_to(float val){
     for(unsigned int i = 0; i < this->shape.size; i++){

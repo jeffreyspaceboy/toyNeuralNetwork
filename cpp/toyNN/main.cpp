@@ -11,7 +11,7 @@
 //#include <sstream>
 //#include "NeuralNetwork.hpp"
 #include "Matrix.hpp"
-#include "Tensor.hpp"
+//#include "Tensor.hpp"
 
 
 
@@ -66,12 +66,16 @@ int main( int argc, char** argv){
 //    Tensor testTensorD = testTensorB * testTensorA;
 //    printf("\n");
 //    testTensorD.print();
-    double a[] = {1,2,3,4,5,6};
-    Matrix A(a, 2, 3);
+    float a[] = {1,2,3,4,5,6};
+    float b[] = {1,2,3,4,5,6};
+    Matrix A(a,2,3);
+    Matrix B(b,3,2);
     A.print();
     printf("\n");
-    Matrix B = A.transposed();
     B.print();
+    printf("\n");
+    Matrix C = ~A;
+    C.print();
     printf("Done\n");
     return 0;
 }

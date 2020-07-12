@@ -29,19 +29,19 @@ class Tensor{
         Tensor(const Tensor &obj);
         //---Destructors---//
         ~Tensor(void);
-
-        //---Get---//
-        Shape get_shape(void);
-        float *get_data(void);
-        float *get_dataT(void);
-        float get_cell(Cell cell);
-
+    
         //---Set---//
         void set_shape(Shape shape);
         void set_data(float *data, Shape shape);
         void set_data(float  data, Shape shape);
         void set_cell(float  data, Cell cell);
         void set_useful_data(float *data, Shape shape);
+
+        //---Get---//
+        Shape get_shape(void);
+        float *get_data(void);
+        float get_cell(unsigned int cell);
+        float get_cell(Cell cell);
         
         //---Operations---//
         void map(float func(float val, Cell cell));

@@ -10,9 +10,7 @@
 
 //---Constructors---//
 Tensor::Tensor(void){} //Blank Constructor
-
 Tensor::Tensor(float *data, Shape shape){ this->set_data(data, shape); }//Standard Constructor
-
 Tensor::Tensor(Shape shape, bool randomize){ //Zero or Randomize Constructor
     if(randomize){
         this->set_shape(shape);
@@ -23,19 +21,16 @@ Tensor::Tensor(Shape shape, bool randomize){ //Zero or Randomize Constructor
 }
 
 Tensor::Tensor(float *data, unsigned int x_size, unsigned int y_size, unsigned int z_size){ this->set_data(data, Shape(x_size,y_size,z_size)); } //Standard Constructor, using y,x size
-
 Tensor::Tensor(unsigned int x_size, unsigned int y_size, unsigned int z_size){ this->set_data(0.0, Shape(x_size,y_size,z_size)); } //Zero Constructor, using y,x size
+
 
 //---Copy Constructors---//
 Tensor::Tensor(const Tensor &obj){ this->set_data(obj.data, obj.shape); }
  
+
 //---Destructors---//
 Tensor::~Tensor(void){ free(this->data); }
 
-//---Get---//
-Shape Tensor::get_shape(void){ return this->shape; }
-float *Tensor::get_data(void){ return this->data; }
-float Tensor::get_cell(Cell cell){ return this->data[cell.d[0]+(cell.d[1] * this->shape.d[0])+(cell.d[2] * this->shape.d[0] * this->shape.d[1])]; }
 
 //---Set---//
 void Tensor::set_shape(Shape shape){
@@ -76,6 +71,14 @@ void Tensor::set_data(float data, Shape shape){
 void Tensor::set_cell(float data, Cell cell){
     this->data[cell.d[0]+(cell.d[1] * this->shape.d[0])+(cell.d[2] * this->shape.d[0] * this->shape.d[1])] = data;
 }
+
+
+//---Get---//
+Shape Tensor::get_shape(void){ return this->shape; }
+float *Tensor::get_data(void){ return this->data; }
+float Tensor::get_cell(unsigned int cell){ return this->data[cell]; }
+float Tensor::get_cell(Cell cell){ return this->data[cell.d[0]+(cell.d[1] * this->shape.d[0])+(cell.d[2] * this->shape.d[0] * this->shape.d[1])]; }
+
 
 //---Math Operations---//
 void Tensor::map(float (*func)(float val, Cell cell)){

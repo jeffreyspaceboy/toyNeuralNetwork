@@ -51,5 +51,4 @@ class Neural_Layer{
         Tensor inputError;
         //sig(W*in + b)=out
 };
-
 #endif /* Neural_Layer_hpp */

@@ -12,12 +12,14 @@
 #include <iostream>
 #include <math.h>
 
+#include "Shape.hpp"
+
 class Matrix{
     public:
         //---Constructors---//
         Matrix();
-        Matrix(float *data, unsigned int shape[2]);
-        Matrix(unsigned int data_shape[2], bool randomize = false);
+        Matrix(float *data, Shape shape);
+        Matrix(Shape shape, bool randomize = false);
     
         Matrix(float *data, unsigned int y_size, unsigned int x_size);
         Matrix(unsigned int y_size, unsigned int x_size);
@@ -27,18 +29,17 @@ class Matrix{
         ~Matrix();
 
         //---Get---//
-        unsigned int *get_shape();
-        unsigned int get_size();
+        Shape get_shape();
         float *get_data();
         float get_cell(unsigned int cell[2]);
         //TODO: ADD GET DATA TRANSPOSED? Maybe just get cell transposed
 
         //---Set---//
-        void set_shape(unsigned int shape[2]);
-        void set_data(float *data, unsigned int shape[2]);
-        void set_data(float  data, unsigned int shape[2]);
+        void set_shape(Shape shape);
+        void set_data(float *data, Shape shape);
+        void set_data(float  data, Shape shape);
         void set_cell(float  data, unsigned int  cell[2]);
-        void set_useful_data(float *data, unsigned int shape[2]);
+        void set_useful_data(float *data, Shape shape);
         
         //---Operations---//
         void map(float func(float val, unsigned int cell[2]));
@@ -65,14 +66,13 @@ class Matrix{
 
         //---Checking---//
         bool check_matrix();
-        bool check_shape(unsigned int shape[2]);
+        bool check_shape(Shape shape);
     
         //---Other---//
         void print();
     
     private:
         float *data = NULL;
-        unsigned int shape[2] = {0,0};
-        unsigned int size = 0;
+        Shape shape;
 };
 #endif /* Matrix_hpp */

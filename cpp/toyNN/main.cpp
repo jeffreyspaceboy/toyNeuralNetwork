@@ -37,7 +37,6 @@
 //
 //std::vector<std::vector<double>> checkInputs = {{2, 242, 170}};
 //Red, Green, Blue, Magenta, Yellow, Cyan
-
 int main( int argc, char** argv){
 //    NeuralNetwork myToyNN(numNodes,"networkData/colorDetector.txt");
 //    myToyNN.train(inputs, targets);
@@ -68,13 +67,13 @@ int main( int argc, char** argv){
 //    testTensorD.print();
     float a[] = {1,2,3,4,5,6};
     float b[] = {1,2,3,4,5,6};
-    Matrix A(a,2,3);
-    Matrix B(b,3,2);
+    Matrix A(a,Shape(2,3));
+    Matrix B(b,Shape(3,2));
     A.print();
     printf("\n");
     B.print();
     printf("\n");
-    Matrix C = ~A;
+    Matrix C = A * B;
     C.print();
     printf("Done\n");
     return 0;

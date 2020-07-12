@@ -13,6 +13,7 @@
 #include <math.h>
 
 #include "Shape.hpp"
+#include "Cell.hpp"
 
 class Matrix{
     public:
@@ -31,19 +32,19 @@ class Matrix{
         //---Get---//
         Shape get_shape();
         float *get_data();
-        float get_cell(unsigned int cell[2]);
+        float get_cell(Cell cell);
         //TODO: ADD GET DATA TRANSPOSED? Maybe just get cell transposed
 
         //---Set---//
         void set_shape(Shape shape);
         void set_data(float *data, Shape shape);
         void set_data(float  data, Shape shape);
-        void set_cell(float  data, unsigned int  cell[2]);
+        void set_cell(float  data, Cell cell);
         void set_useful_data(float *data, Shape shape);
         
         //---Operations---//
-        void map(float func(float val, unsigned int cell[2]));
-        Matrix *map(Matrix *a, float func(float val, unsigned int cell[2]));
+        void map(float func(float val, Cell cell));
+        Matrix *map(Matrix *a, float func(float val, Cell cell));
     
         //TODO: Math using map (will be more efficient)
 

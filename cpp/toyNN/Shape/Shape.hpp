@@ -18,8 +18,8 @@ class Shape{
     
         //---Constructors---//
         Shape();
-        Shape(const unsigned int y_size, const unsigned int x_size);
-        Shape(const unsigned int z_size, const unsigned int y_size, const unsigned int x_size);
+        Shape(const unsigned int x_size, const unsigned int y_size);
+        Shape(const unsigned int x_size, const unsigned int y_size, const unsigned int z_size);
         //---Copy Constructors---//
         Shape(const Shape &obj);
         //---Destructors---//

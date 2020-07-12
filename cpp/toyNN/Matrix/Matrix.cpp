@@ -20,18 +20,12 @@ Matrix::Matrix(Shape shape, bool randomize){ //Zero or Randomize Constructor
     }
 }
 
-Matrix::Matrix(float *data, unsigned int y_size, unsigned int x_size){  //Standard Constructor, using y,x size
-    this->set_data(data, Shape(y_size,x_size));
-}
+Matrix::Matrix(float *data, unsigned int y_size, unsigned int x_size){ this->set_data(data, Shape(y_size,x_size)); } //Standard Constructor, using y,x size
 
-Matrix::Matrix(unsigned int y_size, unsigned int x_size){ //Zero Constructor, using y,x size
-    this->set_data(0.0, Shape(y_size,x_size));
-}
+Matrix::Matrix(unsigned int y_size, unsigned int x_size){ this->set_data(0.0, Shape(y_size,x_size)); } //Zero Constructor, using y,x size
 
 //---Copy Constructors---//
-Matrix::Matrix(const Matrix &obj){
-    this->set_data(obj.data, obj.shape);
-}
+Matrix::Matrix(const Matrix &obj){ this->set_data(obj.data, obj.shape); }
  
 //---Destructors---//
 Matrix::~Matrix(void){ free(this->data); }
@@ -39,7 +33,7 @@ Matrix::~Matrix(void){ free(this->data); }
 //---Get---//
 Shape Matrix::get_shape(){ return this->shape; }
 float *Matrix::get_data(){ return this->data; }
-float Matrix::get_cell(unsigned int cell[2]){ return this->data[cell[0]+(cell[1] * this->shape.d[0])]; }
+float Matrix::get_cell(Cell cell){ return this->data[cell.d[0]+(cell.d[1] * this->shape.d[0])]; }
 
 //---Set---//
 void Matrix::set_shape(Shape shape){
@@ -77,27 +71,27 @@ void Matrix::set_data(float data, Shape shape){
     }
 }
 
-void Matrix::set_cell(float data, unsigned int cell[2]){
-    this->data[cell[0]+(cell[1] * this->shape.d[0])] = data;
+void Matrix::set_cell(float data, Cell cell){
+    this->data[cell.d[0]+(cell.d[1] * this->shape.d[0])] = data;
 }
 
 //---Math Operations---//
-void Matrix::map(float (*func)(float val, unsigned int cell[2])){
-    unsigned int i[2];
-    for(i[1] = 0; i[1] < this->shape.d[1]; i[1]++){
-        for(i[0] = 0; i[0] < this->shape.d[0]; i[0]++){
-            float val = this->data[i[0]+(i[1] * this->shape.d[0])];
-            this->data[i[0]+(i[1] * this->shape.d[0])] = (*func)(val,i);
+void Matrix::map(float (*func)(float val, Cell cell)){
+    Cell cell;
+    for(cell.d[1] = 0; cell.d[1] < this->shape.d[1]; cell.d[1]++){
+        for(cell.d[0] = 0; cell.d[0] < this->shape.d[0]; cell.d[0]++){
+            float val = this->data[cell.d[0]+(cell.d[1] * this->shape.d[0])];
+            this->data[cell.d[0]+(cell.d[1] * this->shape.d[0])] = (*func)(val,cell);
         }
     }
 }
 
-Matrix *Matrix::map(Matrix *a, float (*func)(float val, unsigned int cell[2])){
-    unsigned int i[2];
-    for(i[1] = 0; i[1] < this->shape.d[1]; i[1]++){
-        for(i[0] = 0; i[0] < this->shape.d[0]; i[0]++){
-            float val = a->data[i[0]+(i[1] * this->shape.d[0])];
-            a->data[i[0]+(i[1] * this->shape.d[0])] = (*func)(val,i);
+Matrix *Matrix::map(Matrix *a, float (*func)(float val, Cell cell)){
+    Cell cell;
+    for(cell.d[1] = 0; cell.d[1] < this->shape.d[1]; cell.d[1]++){
+        for(cell.d[0] = 0; cell.d[0] < this->shape.d[0]; cell.d[0]++){
+            float val = a->data[cell.d[0]+(cell.d[1] * this->shape.d[0])];
+            a->data[cell.d[0]+(cell.d[1] * this->shape.d[0])] = (*func)(val,cell);
         }
     }
     return a;
@@ -133,16 +127,16 @@ Matrix Matrix::operator *(Matrix &obj){ //CROSS PRODUCT - overloading the * oper
         exit(1);
     }
     Matrix result(Shape(this->shape.d[0], obj.shape.d[1]));
-    unsigned int i[2];
+    Cell cell;
     unsigned int z;
     float sum;
-    for(i[1] = 0; i[1] < result.shape.d[1]; i[1]++){
-        for(i[0] = 0; i[0] < result.shape.d[0]; i[0]++){
+    for(cell.d[1] = 0; cell.d[1] < result.shape.d[1]; cell.d[1]++){
+        for(cell.d[0] = 0; cell.d[0] < result.shape.d[0]; cell.d[0]++){
             sum = 0;
             for(z = 0; z < this->shape.d[0]; z++){
-                sum += this->data[(i[1] * this->shape.d[0]) + z] * obj.data[(z * result.shape.d[0]) + i[0]]; //OLD VERSION: sum += this->getData(y,z) * obj.data(z,x);
+                sum += this->data[(cell.d[1] * this->shape.d[0]) + z] * obj.data[(z * result.shape.d[0]) + cell.d[0]]; //OLD VERSION: sum += this->getData(y,z) * obj.data(z,x);
                 }//Preforming cross product
-            result.set_cell(sum,i);
+            result.set_cell(sum,cell);
         }
     }
     return result;
@@ -171,11 +165,11 @@ Matrix Matrix::operator *(float obj){ //SCALAR PRODUCT - overloading the * opera
 Matrix Matrix::operator ~(){ return transposed(); }//TRANSPOSE - overloading the ~ operator
 
 Matrix Matrix::transposed(){ //TRANSPOSE
-    unsigned int i[2];
+    Cell cell;
     Matrix result(Shape(this->shape.d[1], this->shape.d[0]));
-    for(i[1] = 0; i[1] < result.shape.d[1]; i[1]++){
-        for(i[0] = 0; i[0] < result.shape.d[0]; i[0]++){
-            result.set_cell(this->data[(i[0] * result.shape.d[1]) + i[1]], i);
+    for(cell.d[1] = 0; cell.d[1] < result.shape.d[1]; cell.d[1]++){
+        for(cell.d[0] = 0; cell.d[0] < result.shape.d[0]; cell.d[0]++){
+            result.set_cell(this->data[(cell.d[0] * result.shape.d[1]) + cell.d[1]], cell);
         }
     }
     return result;
@@ -196,9 +190,9 @@ void Matrix::round_to(float val){
 }
 
 //---Activation Functions---//
-float singleSigmoid(float val, unsigned int cell[2]){return (1/(1+(exp(-val))));}
+float singleSigmoid(float val, Cell cell){return (1/(1+(exp(-val))));}
 void Matrix::sigmoid(){this->map(singleSigmoid);}
-float singleDSigmoid(float val, unsigned int cell[2]){return (singleSigmoid(val, cell)*(1-singleSigmoid(val, cell)));}
+float singleDSigmoid(float val, Cell cell){return (singleSigmoid(val, cell)*(1-singleSigmoid(val, cell)));}
 void Matrix::dSigmoid(){this->map(singleDSigmoid);}
 
 //---Checking---//

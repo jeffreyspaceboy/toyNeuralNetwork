@@ -20,9 +20,9 @@ Matrix::Matrix(Shape shape, bool randomize){ //Zero or Randomize Constructor
     }
 }
 
-Matrix::Matrix(float *data, unsigned int y_size, unsigned int x_size){ this->set_data(data, Shape(y_size,x_size)); } //Standard Constructor, using y,x size
+Matrix::Matrix(float *data, unsigned int x_size, unsigned int y_size){ this->set_data(data, Shape(x_size,y_size)); } //Standard Constructor, using y,x size
 
-Matrix::Matrix(unsigned int y_size, unsigned int x_size){ this->set_data(0.0, Shape(y_size,x_size)); } //Zero Constructor, using y,x size
+Matrix::Matrix(unsigned int x_size, unsigned int y_size){ this->set_data(0.0, Shape(x_size,y_size)); } //Zero Constructor, using y,x size
 
 //---Copy Constructors---//
 Matrix::Matrix(const Matrix &obj){ this->set_data(obj.data, obj.shape); }
@@ -95,6 +95,55 @@ Matrix *Matrix::map(Matrix *a, float (*func)(float val, Cell cell)){
         }
     }
     return a;
+}
+
+
+void Matrix::add(Matrix &obj){
+    if(!(this->check_shape(obj.shape))){
+        printf("ERROR: Shape of matrices must match.\n");
+        exit(1);
+    }
+    for(unsigned int i = 0; i < this->shape.size; i++){
+        this->data[i] = this->data[i] + obj.data[i];
+    }
+}
+
+void Matrix::add(float obj){
+    for(unsigned int i = 0; i < this->shape.size; i++){
+        this->data[i] = this->data[i] + obj;
+    }
+}
+
+void Matrix::subtract(Matrix &obj){
+    if(!(this->check_shape(obj.shape))){
+        printf("ERROR: Shape of matrices must match.\n");
+        exit(1);
+    }
+    for(unsigned int i = 0; i < this->shape.size; i++){
+        this->data[i] = this->data[i] - obj.data[i];
+    }
+}
+
+void Matrix::subtract(float obj){
+    for(unsigned int i = 0; i < this->shape.size; i++){
+        this->data[i] = this->data[i] - obj;
+    }
+}
+
+void Matrix::hadamard_product(Matrix &obj){
+    if(!(this->check_shape(obj.shape))){
+        printf("ERROR: Shape of matrices must match.\n");
+        exit(1);
+    }
+    for(unsigned int i = 0; i < this->shape.size; i++){
+        this->data[i] = this->data[i] * obj.data[i];
+    }
+}
+
+void Matrix::scalar_product(float obj){
+    for(unsigned int i = 0; i < this->shape.size; i++){
+        this->data[i] = this->data[i] * obj;
+    }
 }
 
 Matrix Matrix::operator +(Matrix &obj){ //Overloading add operator
@@ -190,9 +239,7 @@ void Matrix::round_to(float val){
 }
 
 //---Activation Functions---//
-float singleSigmoid(float val, Cell cell){return (1/(1+(exp(-val))));}
 void Matrix::sigmoid(){this->map(singleSigmoid);}
-float singleDSigmoid(float val, Cell cell){return (singleSigmoid(val, cell)*(1-singleSigmoid(val, cell)));}
 void Matrix::dSigmoid(){this->map(singleDSigmoid);}
 
 //---Checking---//

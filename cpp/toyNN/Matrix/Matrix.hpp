@@ -10,10 +10,10 @@
 #define Matrix_hpp
 
 #include <iostream>
-#include <math.h>
 
 #include "Shape.hpp"
 #include "Cell.hpp"
+#include "Activation.hpp"
 
 class Matrix{
     public:
@@ -22,8 +22,8 @@ class Matrix{
         Matrix(float *data, Shape shape);
         Matrix(Shape shape, bool randomize = false);
     
-        Matrix(float *data, unsigned int y_size, unsigned int x_size);
-        Matrix(unsigned int y_size, unsigned int x_size);
+        Matrix(float *data, unsigned int x_size, unsigned int y_size);
+        Matrix(unsigned int x_size, unsigned int y_size);
         //---Copy Constructors---//
         Matrix(const Matrix &obj);
         //---Destructors---//
@@ -47,6 +47,13 @@ class Matrix{
         Matrix *map(Matrix *a, float func(float val, Cell cell));
     
         //TODO: Math using map (will be more efficient)
+    
+        void add(Matrix &obj);
+        void add(float obj);
+        void subtract(Matrix &obj);
+        void subtract(float obj);
+        void hadamard_product(Matrix &obj);
+        void scalar_product(float obj);
 
         Matrix operator +(Matrix &obj);
         Matrix operator -(Matrix &obj);

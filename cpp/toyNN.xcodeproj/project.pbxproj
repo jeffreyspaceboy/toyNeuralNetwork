@@ -13,6 +13,7 @@
 		6D506C7F23F37F9300E20A2D /* Layer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D506C7D23F37F9300E20A2D /* Layer.cpp */; };
 		6D862CED24BAD3C50020F983 /* Shape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D862CEB24BAD3C50020F983 /* Shape.cpp */; };
 		6D862CF124BB7EA50020F983 /* Cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D862CEF24BB7EA50020F983 /* Cell.cpp */; };
+		6D862CFD24BB8B120020F983 /* Activation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D862CFB24BB8B120020F983 /* Activation.cpp */; };
 		6DCA0AFE2486EA6E003E8916 /* Tensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DCA0AFC2486EA6E003E8916 /* Tensor.cpp */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,8 @@
 		6D862CEC24BAD3C50020F983 /* Shape.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Shape.hpp; path = ../../../CPP/toyNN/Shape/Shape.hpp; sourceTree = "<group>"; };
 		6D862CEF24BB7EA50020F983 /* Cell.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Cell.cpp; path = ../../../CPP/toyNN/Cell/Cell.cpp; sourceTree = "<group>"; };
 		6D862CF024BB7EA50020F983 /* Cell.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Cell.hpp; path = ../../../CPP/toyNN/Cell/Cell.hpp; sourceTree = "<group>"; };
+		6D862CFB24BB8B120020F983 /* Activation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Activation.cpp; path = ../../../CPP/toyNN/Activation/Activation.cpp; sourceTree = "<group>"; };
+		6D862CFC24BB8B120020F983 /* Activation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Activation.hpp; path = ../../../CPP/toyNN/Activation/Activation.hpp; sourceTree = "<group>"; };
 		6DCA0AFC2486EA6E003E8916 /* Tensor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tensor.cpp; sourceTree = "<group>"; };
 		6DCA0AFD2486EA6E003E8916 /* Tensor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tensor.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,6 +87,7 @@
 				6DCA0AF72486E9A9003E8916 /* Matrix */,
 				6D862CEA24BAD3A00020F983 /* Shape */,
 				6D862CEE24BB7E860020F983 /* Cell */,
+				6D862CF724BB8AD90020F983 /* Activation */,
 			);
 			path = toyNN;
 			sourceTree = "<group>";
@@ -104,6 +108,15 @@
 				6D862CEF24BB7EA50020F983 /* Cell.cpp */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		6D862CF724BB8AD90020F983 /* Activation */ = {
+			isa = PBXGroup;
+			children = (
+				6D862CFC24BB8B120020F983 /* Activation.hpp */,
+				6D862CFB24BB8B120020F983 /* Activation.cpp */,
+			);
+			path = Activation;
 			sourceTree = "<group>";
 		};
 		6DCA0AF72486E9A9003E8916 /* Matrix */ = {
@@ -182,6 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D33A10623F200DB00EDFD0C /* Matrix.cpp in Sources */,
+				6D862CFD24BB8B120020F983 /* Activation.cpp in Sources */,
 				6D33A0FE23F1FDA600EDFD0C /* main.cpp in Sources */,
 				6DCA0AFE2486EA6E003E8916 /* Tensor.cpp in Sources */,
 				6D862CF124BB7EA50020F983 /* Cell.cpp in Sources */,

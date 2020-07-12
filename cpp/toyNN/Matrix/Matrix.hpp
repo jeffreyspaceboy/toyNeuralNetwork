@@ -15,34 +15,37 @@
 //#include <fstream>
 #include <math.h>
 
+
 class Matrix{
     private:
-        std::string name = "MatrixName";
-        unsigned int data_size = 0; //Total
-        unsigned int data_shape[2] = {0,0}; //[Rows,Cols] or [y,x]
+        unsigned int size = 0; //Total
+        unsigned int shape[2] = {0,0}; //[Rows,Cols] or [y,x]
         double *data = NULL;
     public:
         //---Constructors---//
         Matrix(); //Standard
-        Matrix(double *data, unsigned int data_shape[2]);
+        Matrix(double *data, unsigned int shape[2]);
         Matrix(unsigned int data_shape[2], bool randomize = false);
+        Matrix(unsigned int y_size, unsigned int x_size);
         //---Copy Constructors---//
         Matrix(const Matrix &obj);
         //---Destructors---//
         ~Matrix();
 
         //---Get---//
-        unsigned int *get_data_shape();
-        unsigned int get_data_size();
+        unsigned int *get_shape();
+        unsigned int get_size();
         double *get_data();
         double get_data(unsigned int cell[2]);
         //POTENTIAL TODO: ADD GET DATA TRANSPOSED
         
 
         //---Set---//
-        void set_shape(unsigned int data_shape[2]);
-        void set_data(double *data, unsigned int data_shape[2]);
-        void set_data(double data, unsigned int cell[2]);
+        void set_shape(unsigned int shape[2]);
+        void set_data(double *data, unsigned int shape[2]);
+        void set_data(double  data, unsigned int shape[2]);
+        void set_cell(double  data, unsigned int  cell[2]);
+        
 
         //---Operations---//
         void map(double func(double val, unsigned int cell[2]));
@@ -56,6 +59,7 @@ class Matrix{
     
         Matrix transposed();
     
+        double random(int lowerBound, int upperBound);
         void randomize(int lowerBound, int upperBound);
         void round_to(double val);
 

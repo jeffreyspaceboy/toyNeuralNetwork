@@ -70,7 +70,6 @@ int main( int argc, char** argv){
     float b[] = {6,5,4,3,2,1};
     Tensor A(a,Shape(3,2));
     Tensor B(b,Shape(3,2));
-    A.randomize(-1,1);
     A.print();
     printf("\n");
     B.print();

@@ -19,7 +19,7 @@
 class Tensor{
     public:
         //---Constructors---//
-        Tensor();
+        Tensor(void);
         Tensor(float *data, Shape shape);
         Tensor(Shape shape, bool randomize = false);
     
@@ -28,13 +28,13 @@ class Tensor{
         //---Copy Constructors---//
         Tensor(const Tensor &obj);
         //---Destructors---//
-        ~Tensor();
+        ~Tensor(void);
 
         //---Get---//
-        Shape get_shape();
-        float *get_data();
+        Shape get_shape(void);
+        float *get_data(void);
+        float *get_dataT(void);
         float get_cell(Cell cell);
-        //TODO: ADD GET DATA TRANSPOSED? Maybe just get cell transposed
 
         //---Set---//
         void set_shape(Shape shape);
@@ -64,23 +64,23 @@ class Tensor{
         Tensor operator ->*(Tensor &obj);
         Tensor operator *(float obj);
     
-        Tensor operator ~();
-        Tensor transposed();
+        Tensor operator ~(void);
+        Tensor transposed(void);
     
         float random(int lowerBound, int upperBound, int decimal_precision = 1000);
         void randomize(int lowerBound, int upperBound, int decimal_precision = 1000);
         void round_to(float val);
 
         //---Activation Functions---//
-        void sigmoid();
-        void dSigmoid();
+        void sigmoid(void);
+        void dSigmoid(void);
 
         //---Checking---//
-        bool check_matrix();
+        bool check_matrix(void);
         bool check_shape(Shape shape);
     
         //---Other---//
-        void print();
+        void print(void);
     
     private:
         float *data = NULL;

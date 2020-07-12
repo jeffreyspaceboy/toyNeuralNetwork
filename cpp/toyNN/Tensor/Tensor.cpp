@@ -9,7 +9,7 @@
 #include "Tensor.hpp"
 
 //---Constructors---//
-Tensor::Tensor(){} //Blank Constructor
+Tensor::Tensor(void){} //Blank Constructor
 
 Tensor::Tensor(float *data, Shape shape){ this->set_data(data, shape); }//Standard Constructor
 
@@ -33,8 +33,8 @@ Tensor::Tensor(const Tensor &obj){ this->set_data(obj.data, obj.shape); }
 Tensor::~Tensor(void){ free(this->data); }
 
 //---Get---//
-Shape Tensor::get_shape(){ return this->shape; }
-float *Tensor::get_data(){ return this->data; }
+Shape Tensor::get_shape(void){ return this->shape; }
+float *Tensor::get_data(void){ return this->data; }
 float Tensor::get_cell(Cell cell){ return this->data[cell.d[0]+(cell.d[1] * this->shape.d[0])+(cell.d[2] * this->shape.d[0] * this->shape.d[1])]; }
 
 //---Set---//
@@ -239,9 +239,9 @@ Tensor Tensor::operator *(float obj){ //SCALAR PRODUCT - overloading the * opera
     return Tensor(new_data, this->shape);
 }
 
-Tensor Tensor::operator ~(){ return transposed(); }//TRANSPOSE - overloading the ~ operator
+Tensor Tensor::operator ~(void){ return transposed(); }//TRANSPOSE - overloading the ~ operator
 
-Tensor Tensor::transposed(){ //TRANSPOSE
+Tensor Tensor::transposed(void){ //TRANSPOSE
     Cell cell;
     Tensor result(Shape(this->shape.d[1], this->shape.d[0],this->shape.d[2]));
     for(cell.d[2] = 0; cell.d[2] < result.shape.d[2]; cell.d[2]++){
@@ -273,11 +273,11 @@ void Tensor::round_to(float val){
 }
 
 //---Activation Functions---//
-void Tensor::sigmoid(){this->map(singleSigmoid);}
-void Tensor::dSigmoid(){this->map(singleDSigmoid);}
+void Tensor::sigmoid(void){this->map(singleSigmoid);}
+void Tensor::dSigmoid(void){this->map(singleDSigmoid);}
 
 //---Checking---//
-bool Tensor::check_matrix(){
+bool Tensor::check_matrix(void){
     if(this->shape.size <= 0){
         printf("ERROR: No matrix exists.");
         return false;
@@ -291,7 +291,7 @@ bool Tensor::check_shape(Shape shape){
 }
 
 //---Other---//
-void Tensor::print(){
+void Tensor::print(void){
     Cell cell;
     printf("::{\n");
     for(cell.d[2] = 0; cell.d[2] < this->shape.d[2]; cell.d[2]++) {
@@ -306,16 +306,3 @@ void Tensor::print(){
     }
     printf("}::\n");
 }
-
-
-/* Formulas for regular and transposed translation
- unsigned int regular(){
-     i[1]+(i[0] * this->shape[1])
- }
- unsigned int trans(){
-      i[0] + (i[1] * this->shape[0])
- }
- */
-
-
-

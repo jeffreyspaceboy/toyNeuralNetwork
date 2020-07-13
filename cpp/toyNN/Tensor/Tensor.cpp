@@ -72,6 +72,10 @@ void Tensor::set_cell(float data, Cell cell){
     this->data[cell.d[0]+(cell.d[1] * this->shape.d[0])+(cell.d[2] * this->shape.d[0] * this->shape.d[1])] = data;
 }
 
+void Tensor::set_cell(float data, unsigned int cell){
+    this->data[cell] = data;
+}
+
 
 //---Get---//
 Shape Tensor::get_shape(void){ return this->shape; }

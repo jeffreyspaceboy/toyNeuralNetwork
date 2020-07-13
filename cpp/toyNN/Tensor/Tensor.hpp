@@ -35,7 +35,7 @@ class Tensor{
         void set_data(float *data, Shape shape);
         void set_data(float  data, Shape shape);
         void set_cell(float  data, Cell cell);
-        void set_useful_data(float *data, Shape shape);
+        void set_cell(float data, unsigned int cell);
 
         //---Get---//
         Shape get_shape(void);

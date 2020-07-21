@@ -1,15 +1,15 @@
 //
-//  Neural_Layer.hpp
+//  Neural_Layer.h
 //  toyNN
 //
 //  Created by Jeffrey Fisher on 2/11/20.
 //  Copyright © 2020 Jeffrey Fisher. All rights reserved.
 //
 
-#ifndef Neural_Layer_hpp
-#define Neural_Layer_hpp
+#ifndef Neural_Layer_h
+#define Neural_Layer_h
 
-#include "Tensor.hpp"
+#include "Tensor.h"
 
 class Neural_Layer{
     public:
@@ -51,4 +51,4 @@ class Neural_Layer{
         Tensor inputError;
         //sig(W*in + b)=out
 };
-#endif /* Neural_Layer_hpp */
+#endif /* Neural_Layer_h */

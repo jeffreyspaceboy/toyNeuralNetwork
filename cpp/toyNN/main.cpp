@@ -9,9 +9,9 @@
 //#include <stdio.h>
 #include <iostream>
 //#include <sstream>
-//#include "NeuralNetwork.hpp"
-//#include "Matrix.hpp"
-#include "Tensor.hpp"
+//#include "NeuralNetwork.h"
+//#include "Matrix.h"
+#include "Tensor.h"
 
 
 
@@ -66,8 +66,8 @@ int main( int argc, char** argv){
 //    printf("\n");
 //    testTensorD.print();
 
-    float a[] = {1,2,3,4,5,6};
-    float b[] = {6,5,4,3,2,1};
+    std::vector<float> a = {1,2,3,4,5,6};
+    std::vector<float> b = {6,5,4,3,2,1};
     Tensor A(a,Shape(3,2));
     Tensor B(b,Shape(3,2));
     A.print();

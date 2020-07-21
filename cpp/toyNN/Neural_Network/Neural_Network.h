@@ -1,17 +1,17 @@
 //
-//  Neural_Network.hpp
+//  Neural_Network.h
 //  toyNN
 //
 //  Created by Jeffrey Fisher on 2/11/20.
 //  Copyright © 2020 Jeffrey Fisher. All rights reserved.
 //
 
-#ifndef Neural_Network_hpp
-#define Neural_Network_hpp
+#ifndef Neural_Network_h
+#define Neural_Network_h
 
 #include <fstream>
 #include <vector>
-#include "Neural_Layer.hpp"
+#include "Neural_Layer.h"
 
 class Neural_Network{
     public:
@@ -56,4 +56,4 @@ class Neural_Network{
         float learning_rate = 0.2;
         unsigned int training_runs = 100;
 };
-#endif /* Neural_Network_hpp */
+#endif /* Neural_Network_h */

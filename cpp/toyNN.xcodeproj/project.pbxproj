@@ -8,13 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		6D33A0FE23F1FDA600EDFD0C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D33A0FD23F1FDA600EDFD0C /* main.cpp */; };
-		6D33A10623F200DB00EDFD0C /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D33A10423F200DB00EDFD0C /* Matrix.cpp */; };
 		6D506C7C23F3799B00E20A2D /* Neural_Network.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D506C7A23F3799B00E20A2D /* Neural_Network.cpp */; };
 		6D506C7F23F37F9300E20A2D /* Neural_Layer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D506C7D23F37F9300E20A2D /* Neural_Layer.cpp */; };
-		6D862CED24BAD3C50020F983 /* Shape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D862CEB24BAD3C50020F983 /* Shape.cpp */; };
-		6D862CF124BB7EA50020F983 /* Cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D862CEF24BB7EA50020F983 /* Cell.cpp */; };
-		6D862CFD24BB8B120020F983 /* Activation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D862CFB24BB8B120020F983 /* Activation.cpp */; };
-		6DCA0AFE2486EA6E003E8916 /* Tensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DCA0AFC2486EA6E003E8916 /* Tensor.cpp */; };
+		6D8BD88F24C52D8900AB1F4F /* Activation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BD88C24C52D8900AB1F4F /* Activation.cpp */; };
+		6D8BD89524C5311200AB1F4F /* Shape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BD89324C5311200AB1F4F /* Shape.cpp */; };
+		6D8BD89724C5313B00AB1F4F /* Tensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BD89624C5313B00AB1F4F /* Tensor.cpp */; };
+		6D8BD89A24C534A000AB1F4F /* Cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BD89824C534A000AB1F4F /* Cell.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,20 +31,18 @@
 /* Begin PBXFileReference section */
 		6D33A0FA23F1FDA600EDFD0C /* toyNN */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = toyNN; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D33A0FD23F1FDA600EDFD0C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		6D33A10423F200DB00EDFD0C /* Matrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
-		6D33A10523F200DB00EDFD0C /* Matrix.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Matrix.hpp; sourceTree = "<group>"; };
 		6D506C7A23F3799B00E20A2D /* Neural_Network.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Neural_Network.cpp; sourceTree = "<group>"; };
-		6D506C7B23F3799B00E20A2D /* Neural_Network.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Neural_Network.hpp; sourceTree = "<group>"; };
+		6D506C7B23F3799B00E20A2D /* Neural_Network.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Neural_Network.h; sourceTree = "<group>"; };
 		6D506C7D23F37F9300E20A2D /* Neural_Layer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Neural_Layer.cpp; sourceTree = "<group>"; };
-		6D506C7E23F37F9300E20A2D /* Neural_Layer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Neural_Layer.hpp; sourceTree = "<group>"; };
-		6D862CEB24BAD3C50020F983 /* Shape.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Shape.cpp; path = ../../../CPP/toyNN/Shape/Shape.cpp; sourceTree = "<group>"; };
-		6D862CEC24BAD3C50020F983 /* Shape.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Shape.hpp; path = ../../../CPP/toyNN/Shape/Shape.hpp; sourceTree = "<group>"; };
-		6D862CEF24BB7EA50020F983 /* Cell.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Cell.cpp; path = ../../../CPP/toyNN/Cell/Cell.cpp; sourceTree = "<group>"; };
-		6D862CF024BB7EA50020F983 /* Cell.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Cell.hpp; path = ../../../CPP/toyNN/Cell/Cell.hpp; sourceTree = "<group>"; };
-		6D862CFB24BB8B120020F983 /* Activation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Activation.cpp; path = ../../../CPP/toyNN/Activation/Activation.cpp; sourceTree = "<group>"; };
-		6D862CFC24BB8B120020F983 /* Activation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Activation.hpp; path = ../../../CPP/toyNN/Activation/Activation.hpp; sourceTree = "<group>"; };
-		6DCA0AFC2486EA6E003E8916 /* Tensor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tensor.cpp; sourceTree = "<group>"; };
-		6DCA0AFD2486EA6E003E8916 /* Tensor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tensor.hpp; sourceTree = "<group>"; };
+		6D506C7E23F37F9300E20A2D /* Neural_Layer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Neural_Layer.h; sourceTree = "<group>"; };
+		6D8BD88924C52D8900AB1F4F /* Activation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activation.h; sourceTree = "<group>"; };
+		6D8BD88A24C52D8900AB1F4F /* Tensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tensor.h; sourceTree = "<group>"; };
+		6D8BD88C24C52D8900AB1F4F /* Activation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Activation.cpp; sourceTree = "<group>"; };
+		6D8BD89324C5311200AB1F4F /* Shape.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Shape.cpp; sourceTree = "<group>"; };
+		6D8BD89424C5311200AB1F4F /* Shape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shape.h; sourceTree = "<group>"; };
+		6D8BD89624C5313B00AB1F4F /* Tensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tensor.cpp; sourceTree = "<group>"; };
+		6D8BD89824C534A000AB1F4F /* Cell.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cell.cpp; sourceTree = "<group>"; };
+		6D8BD89924C534A000AB1F4F /* Cell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,62 +76,44 @@
 			isa = PBXGroup;
 			children = (
 				6D33A0FD23F1FDA600EDFD0C /* main.cpp */,
-				6D506C7B23F3799B00E20A2D /* Neural_Network.hpp */,
-				6D506C7A23F3799B00E20A2D /* Neural_Network.cpp */,
-				6D506C7E23F37F9300E20A2D /* Neural_Layer.hpp */,
-				6D506C7D23F37F9300E20A2D /* Neural_Layer.cpp */,
-				6DCA0AFF2486EA73003E8916 /* Tensor */,
-				6DCA0AF72486E9A9003E8916 /* Matrix */,
-				6D862CEA24BAD3A00020F983 /* Shape */,
-				6D862CEE24BB7E860020F983 /* Cell */,
-				6D862CF724BB8AD90020F983 /* Activation */,
+				6D8BD89224C52DC700AB1F4F /* Neural_Network */,
+				6D8BD89124C52DAD00AB1F4F /* Types */,
+				6D8BD89024C52D9300AB1F4F /* Activation */,
 			);
 			path = toyNN;
 			sourceTree = "<group>";
 		};
-		6D862CEA24BAD3A00020F983 /* Shape */ = {
+		6D8BD89024C52D9300AB1F4F /* Activation */ = {
 			isa = PBXGroup;
 			children = (
-				6D862CEC24BAD3C50020F983 /* Shape.hpp */,
-				6D862CEB24BAD3C50020F983 /* Shape.cpp */,
-			);
-			path = Shape;
-			sourceTree = "<group>";
-		};
-		6D862CEE24BB7E860020F983 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				6D862CF024BB7EA50020F983 /* Cell.hpp */,
-				6D862CEF24BB7EA50020F983 /* Cell.cpp */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		6D862CF724BB8AD90020F983 /* Activation */ = {
-			isa = PBXGroup;
-			children = (
-				6D862CFC24BB8B120020F983 /* Activation.hpp */,
-				6D862CFB24BB8B120020F983 /* Activation.cpp */,
+				6D8BD88C24C52D8900AB1F4F /* Activation.cpp */,
+				6D8BD88924C52D8900AB1F4F /* Activation.h */,
 			);
 			path = Activation;
 			sourceTree = "<group>";
 		};
-		6DCA0AF72486E9A9003E8916 /* Matrix */ = {
+		6D8BD89124C52DAD00AB1F4F /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				6D33A10523F200DB00EDFD0C /* Matrix.hpp */,
-				6D33A10423F200DB00EDFD0C /* Matrix.cpp */,
+				6D8BD88A24C52D8900AB1F4F /* Tensor.h */,
+				6D8BD89624C5313B00AB1F4F /* Tensor.cpp */,
+				6D8BD89424C5311200AB1F4F /* Shape.h */,
+				6D8BD89324C5311200AB1F4F /* Shape.cpp */,
+				6D8BD89924C534A000AB1F4F /* Cell.h */,
+				6D8BD89824C534A000AB1F4F /* Cell.cpp */,
 			);
-			path = Matrix;
+			path = Types;
 			sourceTree = "<group>";
 		};
-		6DCA0AFF2486EA73003E8916 /* Tensor */ = {
+		6D8BD89224C52DC700AB1F4F /* Neural_Network */ = {
 			isa = PBXGroup;
 			children = (
-				6DCA0AFD2486EA6E003E8916 /* Tensor.hpp */,
-				6DCA0AFC2486EA6E003E8916 /* Tensor.cpp */,
+				6D506C7B23F3799B00E20A2D /* Neural_Network.h */,
+				6D506C7A23F3799B00E20A2D /* Neural_Network.cpp */,
+				6D506C7E23F37F9300E20A2D /* Neural_Layer.h */,
+				6D506C7D23F37F9300E20A2D /* Neural_Layer.cpp */,
 			);
-			path = Tensor;
+			path = Neural_Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,14 +173,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D33A10623F200DB00EDFD0C /* Matrix.cpp in Sources */,
-				6D862CFD24BB8B120020F983 /* Activation.cpp in Sources */,
+				6D8BD89724C5313B00AB1F4F /* Tensor.cpp in Sources */,
 				6D33A0FE23F1FDA600EDFD0C /* main.cpp in Sources */,
-				6DCA0AFE2486EA6E003E8916 /* Tensor.cpp in Sources */,
-				6D862CF124BB7EA50020F983 /* Cell.cpp in Sources */,
 				6D506C7C23F3799B00E20A2D /* Neural_Network.cpp in Sources */,
+				6D8BD89A24C534A000AB1F4F /* Cell.cpp in Sources */,
+				6D8BD88F24C52D8900AB1F4F /* Activation.cpp in Sources */,
 				6D506C7F23F37F9300E20A2D /* Neural_Layer.cpp in Sources */,
-				6D862CED24BAD3C50020F983 /* Shape.cpp in Sources */,
+				6D8BD89524C5311200AB1F4F /* Shape.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

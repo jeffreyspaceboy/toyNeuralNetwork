@@ -6,7 +6,7 @@
 //  Copyright © 2020 Jeffrey Fisher. All rights reserved.
 //
 
-#include "Activation.hpp"
+#include "Activation.h"
 
 float singleSigmoid(float val, Cell cell){
     return (1/(1+(exp(-val))));

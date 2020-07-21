@@ -1,5 +1,5 @@
 //
-//  Tensor.hpp
+//  Tensor.h
 //  toyNN
 //
 //  Created by Jeffrey Fisher on 6/2/20.
@@ -7,24 +7,23 @@
 //
 
 
-#ifndef Tensor_hpp
-#define Tensor_hpp
+#ifndef Tensor_h
+#define Tensor_h
 
 #include <iostream>
+#include <vector>
 
-#include "Shape.hpp"
-#include "Cell.hpp"
-#include "Activation.hpp"
+#include "Cell.h"
+#include "Shape.h"
+#include "Activation.h"
 
 class Tensor{
     public:
         //---Constructors---//
         Tensor(void);
-        Tensor(float *data, Shape shape);
+        Tensor(std::vector<float> data, Shape shape);
         Tensor(Shape shape, bool randomize = false);
     
-        Tensor(float *data, unsigned int x_size, unsigned int y_size, unsigned int z_size);
-        Tensor(unsigned int x_size, unsigned int y_size, unsigned int z_size);
         //---Copy Constructors---//
         Tensor(const Tensor &obj);
         //---Destructors---//
@@ -32,14 +31,14 @@ class Tensor{
     
         //---Set---//
         void set_shape(Shape shape);
-        void set_data(float *data, Shape shape);
+        void set_data(std::vector<float> data, Shape shape);
         void set_data(float  data, Shape shape);
         void set_cell(float  data, Cell cell);
-        void set_cell(float data, unsigned int cell);
+        void set_cell(float  data, unsigned int cell);
 
         //---Get---//
         Shape get_shape(void);
-        float *get_data(void);
+        std::vector<float> get_data(void);
         float get_cell(unsigned int cell);
         float get_cell(Cell cell);
         
@@ -81,9 +80,8 @@ class Tensor{
     
         //---Other---//
         void print(void);
-    
     private:
-        float *data = NULL;
+        std::vector<float> data;
         Shape shape;
 };
-#endif /* Tensor_hpp */
+#endif /* Tensor_h */

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Jeffrey Fisher. All rights reserved.
 //
 
-#include "Neural_Layer.hpp"
+#include "Neural_Layer.h"
 
 
 //---Constructors---//

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Jeffrey Fisher. All rights reserved.
 //
 
-#include "Neural_Network.hpp"
+#include "Neural_Network.h"
 
 //---Constructors---//
 Neural_Network::Neural_Network(void){}
@@ -85,8 +85,8 @@ void Neural_Network::save_file(std::string name){
     for(i = 0; i < this->layers.size(); i++){
         file << "~\n" << i << " " << 0 <<" ";
         Shape weights_shape(this->layers[i].weights.get_shape());
-        for(j = 0; j < sizeof(weights_shape.d); j++){
-            file << weights_shape.d[j] << " ";
+        for(j = 0; j < sizeof(weights_shape.dim); j++){
+            file << weights_shape.dim[j] << " ";
         }
         file << "\n";
         for(j = 0; j < weights_shape.size; j++){
@@ -94,8 +94,8 @@ void Neural_Network::save_file(std::string name){
         }
         file << "\n~\n" << i << " " << 1 <<" ";
         Shape biases_shape(this->layers[i].biases.get_shape());
-        for(j = 0; j < sizeof(biases_shape.d); j++){
-            file << biases_shape.d[j] << " ";
+        for(j = 0; j < sizeof(biases_shape.dim); j++){
+            file << biases_shape.dim[j] << " ";
         }
         file << "\n";
         for(j = 0; j < biases_shape.size; j++){
@@ -111,7 +111,6 @@ void Neural_Network::save_file(std::string name){
 void Neural_Network::get_file(void){ this->get_file(this->name); }
 
 void Neural_Network::get_file(std::string name){
-    
 //    int neuronsInFile = this->checkNumNodesInFile();
 //    if(neuronsInFile == 0){
 //        std::cout<<"WARNING: File data dimentions do not match this Neural Network."<<std::endl;
@@ -172,11 +171,11 @@ void Neural_Network::get_file(std::string name){
 
 void Neural_Network::setup_from_file(void){
     std::ifstream file;
-    file.open(this->fileName);
+    file.open(this->name);
     if(file.is_open()){
         int matrixInfo[4];
         std::string scannedValue;
-        std::vector<int> neurons;
+        std::vector<unsigned int> neurons;
         while(!file.eof()){
             std::getline(file, scannedValue);
             if(scannedValue == "~"){
@@ -199,7 +198,7 @@ void Neural_Network::setup_from_file(void){
         exit(1);
     }
     for(int i=0; i < (this->neurons.size()-1) ; i++){
-        Layer newLayer(this->neurons[i], this->neurons[i+1]);
+        Neural_Layer newLayer(this->neurons[i], this->neurons[i+1]);
         this->layers.push_back(newLayer);
     }
 }
@@ -216,7 +215,7 @@ Tensor Neural_Network::feed_forward(Tensor input_data){
 }
 
 Tensor Neural_Network::predict(Tensor input_data){
-    if(input_data.get_shape().y_size() != this->neurons.front()){
+    if(input_data.get_shape().dim[1] != this->neurons.front()){
         printf("ERROR: Input data does not match network input size.\n");
         exit(1);
     }
@@ -228,7 +227,7 @@ Tensor Neural_Network::predict(Tensor input_data){
 
 //---Learn---//
 void Neural_Network::train(std::vector<Tensor> input_data, std::vector<Tensor> target_data){ //TODO: Instead of vectors just pass plain Tensors
-    if((input_data[0].get_shape().y_size() != this->neurons.front()) || (target_data[0].get_shape().y_size() != this->neurons.front())){
+    if((input_data[0].get_shape().dim[1] != this->neurons.front()) || (target_data[0].get_shape().dim[1] != this->neurons.front())){
         std::cout<<"ERROR: Training data dimentions do not match network dimentions."<<std::endl;
         exit(1);
     }
@@ -242,8 +241,7 @@ void Neural_Network::train(std::vector<Tensor> input_data, std::vector<Tensor> t
         for(k = (this->layers.size() - 1); k > 0 ; k--){
             this->layers[k].gradient = this->layers[k].outputs;
             this->layers[k].gradient.dSigmoid();
-            this->layers[k].gradient = this->layers[k].gradient ->* this->layers[k].outputError;
-            this->layers[k].gradient = this->layers[k].gradient * this->learning_rate;
+            this->layers[k].gradient = (this->layers[k].gradient ->* this->layers[k].outputError) * this->learning_rate;
             this->layers[k].inputsT = ~(this->layers[k].inputs);
             Tensor delt(this->layers[k].gradient * this->layers[k].inputsT);
             this->layers[k].set_weights_delta(delt);

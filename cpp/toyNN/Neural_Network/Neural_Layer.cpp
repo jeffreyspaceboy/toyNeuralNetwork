@@ -47,7 +47,6 @@ Neural_Layer::Neural_Layer(const Neural_Layer &obj){
     this->inputError = obj.inputError;
 }
 
-
 //---Destructors---//
 Neural_Layer::~Neural_Layer(void){}
 

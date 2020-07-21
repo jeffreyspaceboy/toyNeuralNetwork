@@ -43,15 +43,10 @@ void Tensor::set_data(std::vector<float> data, Shape shape){
     if(!this->data.empty()){
         printf("WARNING: This matrix contains data! The data is being cleared...\n");
         this->data.clear();
-        for(unsigned int i = 0; i < shape.size; i++){
-            this->data.push_back(data[i]);
-        }
-    }else{
-        for(unsigned int i = 0; i < shape.size; i++){
-            this->data[i] = data[i];
-        }
     }
-    
+    for(unsigned int i = 0; i < shape.size; i++){
+        this->data.push_back(data[i]);
+    }
 }
 
 void Tensor::set_data(float data, Shape shape){
@@ -61,13 +56,9 @@ void Tensor::set_data(float data, Shape shape){
     if(!this->data.empty()){
         printf("WARNING: This matrix contains data! The data is being cleared...\n");
         this->data.clear();
-        for(unsigned int i = 0; i < shape.size; i++){
-            this->data.push_back(data);
-        }
-    }else{
-        for(unsigned int i = 0; i < shape.size; i++){
-            this->data[i] = data;
-        }
+    }
+    for(unsigned int i = 0; i < shape.size; i++){
+        this->data.push_back(data);
     }
 }
 
@@ -87,7 +78,14 @@ float Tensor::get_cell(unsigned int cell){ return this->data[cell]; }
 float Tensor::get_cell(Cell cell){
     return this->data[cell.get_cell_index(this->shape)];
 }
-
+Tensor Tensor::get_matrix(unsigned int z){
+    Shape matrix_shape(shape.dim[0],shape.dim[1]);
+    std::vector<float> matrix_data;
+    for(unsigned int i = z; i < matrix_shape.size; i++){
+        matrix_data.append(this->data[i]) //TODO: Somehow make data fill correctly lol
+    }
+    return Tensor(matrix_data, matrix_shape);
+}
 
 //---Math Operations---//
 void Tensor::map(float (*func)(float val, Cell cell)){
@@ -307,16 +305,16 @@ bool Tensor::check_shape(Shape shape){
 //---Other---//
 void Tensor::print(void){
     Cell cell;
-    printf("::{\n");
+    printf("{\n");
     for(cell.p[2] = 0; cell.p[2] < this->shape.dim[2]; cell.p[2]++) {
-        printf("Layer: %d\n", cell.p[2]);
+        printf("  Layer: %d\n", cell.p[2]);
         for(cell.p[1] = 0; cell.p[1] < this->shape.dim[1]; cell.p[1]++) {
-            printf("[");
+            printf("  [");
             for(cell.p[0] = 0; cell.p[0] < this->shape.dim[0]-1; cell.p[0]++){
                 printf("%f,",data[cell.get_cell_index(this->shape)]);
             }
             printf("%f]\n",this->data[get_index(this->shape, (this->shape.dim[0]-1), cell.p[1], cell.p[2])]);
         }
     }
-    printf("}::\n");
+    printf("}\n");
 }

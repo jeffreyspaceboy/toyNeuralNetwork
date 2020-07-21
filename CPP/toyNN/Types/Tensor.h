@@ -41,6 +41,7 @@ class Tensor{
         std::vector<float> get_data(void);
         float get_cell(unsigned int cell);
         float get_cell(Cell cell);
+        Tensor get_matrix(unsigned int z);
         
         //---Operations---//
         void map(float func(float val, Cell cell));

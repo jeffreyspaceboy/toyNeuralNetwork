@@ -9,8 +9,7 @@
 //#include <stdio.h>
 #include <iostream>
 //#include <sstream>
-//#include "NeuralNetwork.h"
-//#include "Matrix.h"
+#include "Neural_Network.h"
 #include "Tensor.h"
 
 
@@ -33,11 +32,13 @@
 // {0,0,0,0,0,1},{0,0,0,0,0,1},{0,0,0,0,0,1},{0,0,0,0,0,1},{0,0,0,0,0,1}
 //}; //Correct output values for the input training data.
 //
-//std::vector<int> numNodes = {3,8,6};
+std::vector<unsigned int> numNodes = {3,8,6};
 //
 //std::vector<std::vector<double>> checkInputs = {{2, 242, 170}};
 //Red, Green, Blue, Magenta, Yellow, Cyan
 int main( int argc, char** argv){
+    Neural_Network myToyNN(numNodes);
+    myToyNN.train(<#std::vector<Tensor> input_data#>, <#std::vector<Tensor> target_data#>)
 //    NeuralNetwork myToyNN(numNodes,"networkData/colorDetector.txt");
 //    myToyNN.train(inputs, targets);
 //    myToyNN.predict(checkInputs);
@@ -66,16 +67,16 @@ int main( int argc, char** argv){
 //    printf("\n");
 //    testTensorD.print();
 
-    std::vector<float> a = {1,2,3,4,5,6};
-    std::vector<float> b = {6,5,4,3,2,1};
-    Tensor A(a,Shape(3,2));
-    Tensor B(b,Shape(3,2));
-    A.print();
-    printf("\n");
-    B.print();
-    printf("\n");
-    Tensor C = ~A - 1;
-    C.print();
+//    std::vector<float> a = {1,2,3,4,5,6};
+//    std::vector<float> b = {6,5,4,3,2,1};
+//    Tensor A(a,Shape(3,2));
+//    Tensor B(b,Shape(3,2));
+//    A.print();
+//    printf("\n");
+//    B.print();
+//    printf("\n");
+//    Tensor C = ~A;
+//    C.print();
     printf("Done\n");
     return 0;
 }

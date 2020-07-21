@@ -226,17 +226,17 @@ Tensor Neural_Network::predict(Tensor input_data){
 
 
 //---Learn---//
-void Neural_Network::train(std::vector<Tensor> input_data, std::vector<Tensor> target_data){ //TODO: Instead of vectors just pass plain Tensors
-    if((input_data[0].get_shape().dim[1] != this->neurons.front()) || (target_data[0].get_shape().dim[1] != this->neurons.front())){
+void Neural_Network::train(Tensor input_data, Tensor target_data){
+    if((input_data.get_shape().dim[1] != this->neurons.front()) || (target_data.get_shape().dim[1] != this->neurons.front())){
         std::cout<<"ERROR: Training data dimentions do not match network dimentions."<<std::endl;
         exit(1);
     }
     unsigned int x, i;
     unsigned long int k;
     for(i = 0; i < training_runs; i++){
-        x = rand() % (input_data[0].get_shape().size - 1);
-        Tensor trainingOutputs(this->feed_forward(input_data[x]));
-        this->layers[this->layers.size()-1].outputError = (~target_data[x]) - trainingOutputs;
+        x = rand() % (input_data.get_shape().dim[2] - 1);
+        Tensor trainingOutputs(this->feed_forward(input_data.get_matrix[x]));
+        this->layers[this->layers.size()-1].outputError = (~target_data.get_matrix[x]) - trainingOutputs;
         this->layers[this->layers.size()-1].outputs = trainingOutputs;
         for(k = (this->layers.size() - 1); k > 0 ; k--){
             this->layers[k].gradient = this->layers[k].outputs;

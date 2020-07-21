@@ -44,7 +44,7 @@ class Neural_Network{
         Tensor feed_forward(Tensor input_data);
         Tensor predict(Tensor input_data);
         //---Learn---//
-        void train(std::vector<Tensor> input_data, std::vector<Tensor> target_data);
+        void train(Tensor input_data, Tensor target_data);
     
     private:
         //---Network_Structure---//

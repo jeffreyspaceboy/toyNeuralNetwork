@@ -67,7 +67,7 @@ void Neural_Network::save_file(std::string name){
         ~
         Current_Layer    Select_Biases   X_Size   Y_Size   Z_Size
         Row of BiasesData
-     
+
         ~
         ...
     */
@@ -131,7 +131,7 @@ void Neural_Network::get_file(std::string name){
         ~
         Current_Layer    Select_Biases   X_Size   Y_Size   Z_Size
         Row of BiasesData
-     
+
         ~
         ...
     */
@@ -227,7 +227,7 @@ Tensor Neural_Network::predict(Tensor input_data){
 
 //---Learn---//
 void Neural_Network::train(Tensor input_data, Tensor target_data){
-    if((input_data.get_shape().dim[1] != this->neurons.front()) || (target_data.get_shape().dim[1] != this->neurons.front())){
+    if((input_data.get_shape().dim[1] != this->neurons.front()) || (target_data.get_shape().dim[1] != this->neurons.back())){
         std::cout<<"ERROR: Training data dimentions do not match network dimentions."<<std::endl;
         exit(1);
     }
@@ -235,8 +235,8 @@ void Neural_Network::train(Tensor input_data, Tensor target_data){
     unsigned long int k;
     for(i = 0; i < training_runs; i++){
         x = rand() % (input_data.get_shape().dim[2] - 1);
-        Tensor trainingOutputs(this->feed_forward(input_data.get_matrix[x]));
-        this->layers[this->layers.size()-1].outputError = (~target_data.get_matrix[x]) - trainingOutputs;
+        Tensor trainingOutputs(this->feed_forward(input_data.get_matrix(x)));
+        this->layers[this->layers.size()-1].outputError = (~target_data.get_matrix(x)) - trainingOutputs;
         this->layers[this->layers.size()-1].outputs = trainingOutputs;
         for(k = (this->layers.size() - 1); k > 0 ; k--){
             this->layers[k].gradient = this->layers[k].outputs;

@@ -17,20 +17,6 @@ Shape::Shape(){
     dim.push_back(0);
 }
 
-Shape::Shape(unsigned int x_size){
-    size = x_size;
-    dim.push_back(x_size);
-    dim.push_back(1);
-    dim.push_back(1);
-}
-
-Shape::Shape(unsigned int x_size, unsigned int y_size){
-    size = x_size * y_size;
-    dim.push_back(x_size);
-    dim.push_back(y_size);
-    dim.push_back(1);
-}
-
 Shape::Shape(unsigned int x_size, unsigned int y_size, unsigned int z_size){
     size = x_size * y_size * z_size;
     dim.push_back(x_size);

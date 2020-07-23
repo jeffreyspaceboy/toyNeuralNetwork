@@ -22,7 +22,7 @@ Tensor::Tensor(Shape shape, bool randomize){ //Zero or Randomize Constructor
 
 //---Copy Constructors---//
 Tensor::Tensor(const Tensor &obj){ set_data(obj.data, obj.shape); }
- 
+
 
 //---Destructors---//
 Tensor::~Tensor(void){}
@@ -79,12 +79,12 @@ float Tensor::get_cell(Cell cell){
     return this->data[cell.get_cell_index(this->shape)];
 }
 Tensor Tensor::get_matrix(unsigned int z){
-    Shape matrix_shape(shape.dim[0],shape.dim[1]);
     std::vector<float> matrix_data;
-    for(unsigned int i = z; i < matrix_shape.size; i++){
-        matrix_data.append(this->data[i]) //TODO: Somehow make data fill correctly lol
+    unsigned int i_start = get_index(shape,0,0,z);
+    for(unsigned int i = i_start; i < (i_start + (shape.dim[0]*shape.dim[1])); i++){
+        matrix_data.push_back(this->data[i]);
     }
-    return Tensor(matrix_data, matrix_shape);
+    return Tensor(matrix_data, Shape(shape.dim[0],shape.dim[1]));
 }
 
 //---Math Operations---//

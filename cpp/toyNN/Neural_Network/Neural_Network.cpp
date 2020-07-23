@@ -44,7 +44,7 @@ Neural_Network::Neural_Network(const Neural_Network &obj, std::string new_name){
 
 //---Destructors---//
 Neural_Network::~Neural_Network(void){
-    this->save_file(this->name);
+    //this->save_file(this->name);
 }
 
 

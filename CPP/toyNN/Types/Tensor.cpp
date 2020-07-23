@@ -248,7 +248,7 @@ Tensor Tensor::transposed(void){ //TRANSPOSE
     for(cell.p[2] = 0; cell.p[2] < result.shape.dim[2]; cell.p[2]++){
         for(cell.p[1] = 0; cell.p[1] < result.shape.dim[1]; cell.p[1]++){
             for(cell.p[0] = 0; cell.p[0] < result.shape.dim[0]; cell.p[0]++){
-                result.set_cell(this->data[get_index(result.shape, cell.p[1], cell.p[0], cell.p[2])], cell);
+                result.set_cell(this->data[get_index(this->shape, cell.p[1], cell.p[0], cell.p[2])], cell);
             }
         }
     }
@@ -262,8 +262,12 @@ float Tensor::random(int lowerBound, int upperBound, int decimal_precision){
 }
 
 void Tensor::randomize(int lowerBound, int upperBound, int decimal_precision){
+    if(!this->data.empty()){
+        printf("WARNING: This matrix contains data! The data is being cleared...\n");
+        this->data.clear();
+    }
     for(unsigned int i = 0; i < this->shape.size; i++){
-        this->data[i] = random(lowerBound, upperBound, decimal_precision);
+        this->data.push_back(this->random(lowerBound, upperBound, decimal_precision));
     }
 }
 

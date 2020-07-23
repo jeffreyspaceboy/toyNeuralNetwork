@@ -14,8 +14,8 @@ Neural_Layer::Neural_Layer(){}
 
 Neural_Layer::Neural_Layer(const unsigned int numStartNodes, const unsigned int numEndNodes){
     this->inputs = Tensor(Shape(1,numStartNodes));
-    this->weights = Tensor(Shape(numStartNodes,numEndNodes));
-    this->biases = Tensor(Shape(1,numEndNodes));
+    this->weights = Tensor(Shape(numStartNodes,numEndNodes), true);
+    this->biases = Tensor(Shape(1,numEndNodes), true);
     this->outputs = Tensor(Shape(1,numEndNodes));
 
     //this->randomize(-1,1);

@@ -36,7 +36,7 @@ std::vector<float> targets = {
 //
 std::vector<unsigned int> numNodes = {3,8,6};
 //
-std::vector<float> checkInputs = {255, 150, 0};
+std::vector<float> checkInputs = {50, 120, 255};
 
 //Red, Green, Blue, Magenta, Yellow, Cyan
 int main( int argc, char** argv){

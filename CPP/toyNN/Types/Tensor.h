@@ -22,6 +22,8 @@ class Tensor{
         //---Constructors---//
         Tensor(void);
         Tensor(std::vector<float> data, Shape shape);
+        Tensor(std::vector<float> data);
+        Tensor(float *data, Shape shape);
         Tensor(Shape shape, bool randomize = false);
 
         //---Copy Constructors---//

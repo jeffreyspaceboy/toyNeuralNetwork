@@ -11,6 +11,13 @@
 //---Constructors---//
 Tensor::Tensor(void){} //Blank Constructor
 Tensor::Tensor(std::vector<float> data, Shape shape){ set_data(data, shape); }//Standard Constructor
+Tensor::Tensor(std::vector<float> data){ set_data(data, Shape((unsigned int)data.size())); }
+Tensor::Tensor(float *data, Shape shape){
+    for(unsigned int i = 0; i < shape.size; i++){
+        this->data.push_back(data[i]);
+    }
+}
+
 Tensor::Tensor(Shape shape, bool randomize){ //Zero or Randomize Constructor
     if(randomize){
         set_shape(shape);

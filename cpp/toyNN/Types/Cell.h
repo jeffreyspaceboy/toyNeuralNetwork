@@ -10,6 +10,7 @@
 #define Cell_h
 
 #include <vector>
+#include <math.h>
 
 #include "Shape.h"
 
@@ -19,6 +20,7 @@ class Cell{
     public:
         //---Constructors---//
         Cell(unsigned int x = 0, unsigned int y = 0, unsigned int z = 0);
+        Cell(Shape shape, unsigned int i);
         //---Copy Constructors---//
         Cell(const Cell &obj);
         //---Destructors---//

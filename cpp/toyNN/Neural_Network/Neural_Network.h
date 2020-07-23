@@ -54,6 +54,6 @@ class Neural_Network{
         //---Settings---//
         std::string name = "Neural_Network";
         float learning_rate = 0.2;
-        unsigned int training_runs = 100;
+        unsigned int training_runs = 1000;
 };
 #endif /* Neural_Network_h */

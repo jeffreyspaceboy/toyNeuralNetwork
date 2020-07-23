@@ -89,26 +89,16 @@ Tensor Tensor::get_matrix(unsigned int z){
 
 //---Math Operations---//
 void Tensor::map(float (*func)(float val, Cell cell)){
-    Cell cell(0,0,0);
-    for(cell.p[2] = 0; cell.p[2] < this->shape.dim[2]; cell.p[2]++){
-        for(cell.p[1] = 0; cell.p[1] < this->shape.dim[1]; cell.p[1]++){
-            for(cell.p[0] = 0; cell.p[0] < this->shape.dim[0]; cell.p[0]++){
-                float val = this->data[cell.get_cell_index(this->shape)];
-                this->data[cell.get_cell_index(this->shape)] = (*func)(val,cell);
-            }
-        }
+    for(unsigned int i = 0; i < shape.size; i++){
+        float val = this->data[i];
+        this->data[i] = (*func)(val, Cell(shape,i));
     }
 }
 
 Tensor *Tensor::map(Tensor *a, float (*func)(float val, Cell cell)){
-    Cell cell;
-    for(cell.p[2] = 0; cell.p[2] < this->shape.dim[2]; cell.p[2]++){
-        for(cell.p[1] = 0; cell.p[1] < this->shape.dim[1]; cell.p[1]++){
-            for(cell.p[0] = 0; cell.p[0] < this->shape.dim[0]; cell.p[0]++){
-                float val = a->data[cell.get_cell_index(this->shape)];
-                a->data[cell.get_cell_index(this->shape)] = (*func)(val,cell);
-            }
-        }
+    for(unsigned int i = 0; i < a->shape.size; i++){
+        float val = a->data[i];
+        a->data[i] = (*func)(val, Cell(a->shape,i));
     }
     return a;
 }

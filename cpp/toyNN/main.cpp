@@ -36,11 +36,13 @@ std::vector<float> targets = {
 //
 std::vector<unsigned int> numNodes = {3,8,6};
 //
-//std::vector<std::vector<double>> checkInputs = {{2, 242, 170}};
+std::vector<float> checkInputs = {2, 242, 170};
+
 //Red, Green, Blue, Magenta, Yellow, Cyan
 int main( int argc, char** argv){
     Neural_Network myToyNN(numNodes);
-    myToyNN.train(Tensor(inputs, Shape(1,3,30)),Tensor(targets, Shape(1,6,30)));
+    myToyNN.train(Tensor(inputs, Shape(3,1,30)),Tensor(targets, Shape(6,1,30)));
+    myToyNN.predict(Tensor(checkInputs, Shape(3,1,1)));
 //    NeuralNetwork myToyNN(numNodes,"networkData/colorDetector.txt");
 //    myToyNN.train(inputs, targets);
 //    myToyNN.predict(checkInputs);

@@ -215,7 +215,7 @@ Tensor Neural_Network::feed_forward(Tensor input_data){
 }
 
 Tensor Neural_Network::predict(Tensor input_data){
-    if(input_data.get_shape().dim[1] != this->neurons.front()){
+    if(input_data.get_shape().dim[0] != this->neurons.front()){
         printf("ERROR: Input data does not match network input size.\n");
         exit(1);
     }
@@ -227,7 +227,7 @@ Tensor Neural_Network::predict(Tensor input_data){
 
 //---Learn---//
 void Neural_Network::train(Tensor input_data, Tensor target_data){
-    if((input_data.get_shape().dim[1] != this->neurons.front()) || (target_data.get_shape().dim[1] != this->neurons.back())){
+    if((input_data.get_shape().dim[0] != this->neurons.front()) || (target_data.get_shape().dim[0] != this->neurons.back())){
         std::cout<<"ERROR: Training data dimentions do not match network dimentions."<<std::endl;
         exit(1);
     }
